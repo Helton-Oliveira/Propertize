@@ -4,6 +4,8 @@ import com.digisphere.propertize.user.builderPattern.builder.IUserBuilder;
 import com.digisphere.propertize.user.builderPattern.builder.UserBuilder;
 import com.digisphere.propertize.user.domain.Role;
 import com.digisphere.propertize.user.domain.User;
+import com.digisphere.propertize.user.utils.CorporateEmailCreator;
+import com.digisphere.propertize.user.utils.RandomPasswordGenerator;
 
 import java.util.UUID;
 
@@ -21,19 +23,44 @@ public class Director implements IDirector {
     }
 
     @Override
-    public void createUser(String name, String email, String cpf, String password, String phone, String role) {
+    public void createAdmin(String name, String cpf, String phone) {
+        builder.setId(UUID.randomUUID());
+        builder.setName(name);
+        builder.setEmail(CorporateEmailCreator.create(name));
+        builder.setCpf(cpf);
+        builder.setPassword(RandomPasswordGenerator.toGenerate());
+        builder.setPhone(phone);
+        builder.setActive(true);
+        builder.setRole(Role.ADMIN);
+    }
+
+    @Override
+    public void createTenant(String name, String cpf, String email, String phone) {
         builder.setId(UUID.randomUUID());
         builder.setName(name);
         builder.setEmail(email);
         builder.setCpf(cpf);
-        builder.setPassword(password);
+        builder.setPassword(RandomPasswordGenerator.toGenerate());
         builder.setPhone(phone);
         builder.setActive(true);
-        builder.setRole(Role.valueOf(role.toUpperCase()));
+        builder.setRole(Role.TENANT);
+    }
+
+    @Override
+    public void createOwner(String name, String cpf, String email, String phone) {
+        builder.setId(UUID.randomUUID());
+        builder.setName(name);
+        builder.setEmail(email);
+        builder.setCpf(cpf);
+        builder.setPassword(RandomPasswordGenerator.toGenerate());
+        builder.setPhone(phone);
+        builder.setActive(true);
+        builder.setRole(Role.OWNER);
     }
 
     @Override
     public User build() {
         return builder.getUser();
     }
+
 }
