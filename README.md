@@ -51,7 +51,10 @@ The system is designed to be modular and scalable, with clear separations of con
 
 The following design patterns are implemented in this refactor:
 
-- *under construction...*
+- **Builder**: creational pattern that allows the step-by-step creation of a complex object, being able to use the same construction code to represent different objects
+- **Strategy**: behavioral pattern that allows you to create families of algorithms with their separate specifications and make them interchangeable
+
+> *Note: Reference materials for this project were consulted from [Refactoring Guru](https://refactoring.guru/pt-br), which provides comprehensive insights into design patterns and refactoring techniques.*
 
 ## How to Run the Project
 
