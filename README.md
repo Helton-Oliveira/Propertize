@@ -53,6 +53,7 @@ The following design patterns are implemented in this refactor:
 
 - **Builder**: creational pattern that allows the step-by-step creation of a complex object, being able to use the same construction code to represent different objects
 - **Strategy**: behavioral pattern that allows you to create families of algorithms with their separate specifications and make them interchangeable
+- **State**: Behavioral pattern that allows you to define a class capable of changing the logic of its methods according to its "state", almost as if it were another class.
 
 > *Note: Reference materials for this project were consulted from [Refactoring Guru](https://refactoring.guru/pt-br), which provides comprehensive insights into design patterns and refactoring techniques.*
 
