@@ -1,4 +1,4 @@
-package com.digisphere.propertize.application.user.useCase;
+package com.digisphere.propertize.application.user.useCase.interfaces;
 
 import com.digisphere.propertize.application.user.domain.User;
 

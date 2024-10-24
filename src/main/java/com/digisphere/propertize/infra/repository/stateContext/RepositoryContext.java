@@ -5,6 +5,7 @@ import com.digisphere.propertize.infra.repository.sateRepository.StateRepository
 import com.digisphere.propertize.infra.repository.sateRepository.UserRepository;
 import com.digisphere.propertize.application.user.builderPattern.builder.UserBuilder;
 
+import java.util.List;
 import java.util.Map;
 
 public class RepositoryContext implements IRepositoryContext {
@@ -25,13 +26,18 @@ public class RepositoryContext implements IRepositoryContext {
     }
 
     @Override
-    public <T> T getAll() {
+    public String update(String id, Map<String, String> data) {
+        return stateRepository.update(id, data);
+    }
+
+    @Override
+    public <T> List<T> getAll() {
         return stateRepository.getAll();
 
     }
 
     @Override
-    public <T> T delete(String id) {
+    public String delete(String id) {
         return stateRepository.delete(id);
     }
 

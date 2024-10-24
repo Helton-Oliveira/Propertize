@@ -1,11 +1,10 @@
 package com.digisphere.propertize;
 
-import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
-import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
-import com.digisphere.propertize.application.user.useCase.CreateUser;
-import com.digisphere.propertize.application.user.useCase.GetOneUser;
+import com.digisphere.propertize.application.user.useCase.*;
 import com.digisphere.propertize.application.user.useCase.strategyPattern.context.Context;
 import com.digisphere.propertize.application.user.useCase.strategyPattern.context.IContext;
+import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
+import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -61,10 +60,10 @@ public class UserTest {
         IContext context = new Context();
         IRepositoryContext stateContext = new RepositoryContext();
 
-        input.put("name", "Edina Moura");
+        input.put("name", "Diego HDM");
         input.put("cpf", "1234567890");
         input.put("phone", "19 99845577");
-        input.put("email", "edinaMoura@gmail.com");
+        input.put("email", "hdm@gmail.com");
         input.put("role", "owner");
 
         var tenant = new CreateUser(stateContext, context);
@@ -82,5 +81,54 @@ public class UserTest {
         var user = get.execute("42a1576f-4b10-467f-831c-b91b5798500b");
 
         assertThat(user.getRole().toString()).isEqualTo("ADMIN");
+    }
+
+    @Test
+    @DisplayName("Deve retornar todos os usuários")
+    void getAllUsers() {
+        IRepositoryContext repositoryContext = new RepositoryContext();
+
+        var getAllUsers = new GetAllUsers(repositoryContext);
+        var userList = getAllUsers.execute();
+
+        userList.forEach(u -> {
+            assertThat(u.getActive()).isTrue();
+        });
+    }
+
+    @Test
+    @DisplayName("Deve atualizar a senha do usuario")
+    void updatePassword() {
+        Map<String, String> data = new HashMap<>();
+        data.put("password", "d_X3");
+        IRepositoryContext repositoryContext = new RepositoryContext();
+
+        var updatedData = new UpdateUser(repositoryContext);
+        var response = updatedData.execute("7193ef6b-bffc-444d-a25e-d7966a5b6b69", data);
+
+        assertThat(response).isEqualTo("PASSWORD DO USUÁRIO COM ID: 7193ef6b-bffc-444d-a25e-d7966a5b6b69 ATUALIZADA COM SUCESSO!");
+    }
+
+    @Test
+    @DisplayName("Deve atualizar o telefone do usuario")
+    void updatePhone() {
+        Map<String, String> data = new HashMap<>();
+        data.put("phone", "19 9999-0000");
+        IRepositoryContext repositoryContext = new RepositoryContext();
+
+        var updatedData = new UpdateUser(repositoryContext);
+        var response = updatedData.execute("7193ef6b-bffc-444d-a25e-d7966a5b6b69", data);
+
+        assertThat(response).isEqualTo("PHONE DO USUÁRIO COM ID: 7193ef6b-bffc-444d-a25e-d7966a5b6b69 ATUALIZADA COM SUCESSO!");
+    }
+
+    @Test
+    @DisplayName("Deve desativar usuario")
+    void deleteUser() {
+        IRepositoryContext repositoryContext = new RepositoryContext();
+        var disabledUser = new DisableUser(repositoryContext);
+        var response = disabledUser.execute("7193ef6b-bffc-444d-a25e-d7966a5b6b69");
+
+        assertThat(response).isEqualTo("USUÁRIO COM ID: 7193ef6b-bffc-444d-a25e-d7966a5b6b69 DESAIVADO COM SUCESSO.");
     }
 }

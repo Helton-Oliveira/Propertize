@@ -1,6 +1,7 @@
 package com.digisphere.propertize.application.user.useCase;
 
 import com.digisphere.propertize.application.user.domain.User;
+import com.digisphere.propertize.application.user.useCase.interfaces.IGetOneUSer;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
 public class GetOneUser implements IGetOneUSer {
