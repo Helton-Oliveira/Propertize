@@ -1,10 +1,10 @@
-package com.digisphere.propertize.user.useCase.strategyPattern.context;
+package com.digisphere.propertize.application.user.useCase.strategyPattern.context;
 
-import com.digisphere.propertize.user.domain.User;
-import com.digisphere.propertize.user.useCase.strategyPattern.strategy.CreateAdmin;
-import com.digisphere.propertize.user.useCase.strategyPattern.strategy.CreateOwner;
-import com.digisphere.propertize.user.useCase.strategyPattern.strategy.CreateTenant;
-import com.digisphere.propertize.user.useCase.strategyPattern.strategy.IStrategy;
+import com.digisphere.propertize.application.user.domain.User;
+import com.digisphere.propertize.application.user.useCase.strategyPattern.strategy.CreateOwner;
+import com.digisphere.propertize.application.user.useCase.strategyPattern.strategy.IStrategy;
+import com.digisphere.propertize.application.user.useCase.strategyPattern.strategy.CreateAdmin;
+import com.digisphere.propertize.application.user.useCase.strategyPattern.strategy.CreateTenant;
 
 import java.util.Map;
 

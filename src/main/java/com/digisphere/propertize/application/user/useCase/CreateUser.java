@@ -1,8 +1,8 @@
-package com.digisphere.propertize.user.useCase;
+package com.digisphere.propertize.application.user.useCase;
 
+import com.digisphere.propertize.application.user.domain.User;
+import com.digisphere.propertize.application.user.useCase.strategyPattern.context.IContext;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
-import com.digisphere.propertize.user.domain.User;
-import com.digisphere.propertize.user.useCase.strategyPattern.context.IContext;
 
 import java.util.HashMap;
 import java.util.Map;

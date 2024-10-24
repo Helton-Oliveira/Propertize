@@ -1,6 +1,6 @@
-package com.digisphere.propertize.user.useCase.strategyPattern.context;
+package com.digisphere.propertize.application.user.useCase.strategyPattern.context;
 
-import com.digisphere.propertize.user.domain.User;
+import com.digisphere.propertize.application.user.domain.User;
 
 import java.util.Map;
 

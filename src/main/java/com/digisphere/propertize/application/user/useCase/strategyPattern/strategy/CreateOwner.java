@@ -1,7 +1,7 @@
-package com.digisphere.propertize.user.useCase.strategyPattern.strategy;
+package com.digisphere.propertize.application.user.useCase.strategyPattern.strategy;
 
-import com.digisphere.propertize.user.builderPattern.director.Director;
-import com.digisphere.propertize.user.domain.User;
+import com.digisphere.propertize.application.user.builderPattern.director.Director;
+import com.digisphere.propertize.application.user.domain.User;
 
 import java.util.Map;
 

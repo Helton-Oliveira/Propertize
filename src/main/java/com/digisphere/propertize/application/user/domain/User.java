@@ -1,4 +1,4 @@
-package com.digisphere.propertize.user.domain;
+package com.digisphere.propertize.application.user.domain;
 
 import java.util.UUID;
 

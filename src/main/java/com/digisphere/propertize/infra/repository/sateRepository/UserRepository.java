@@ -1,9 +1,9 @@
 package com.digisphere.propertize.infra.repository.sateRepository;
 
 import com.digisphere.propertize.adapter.connection.IConnection;
-import com.digisphere.propertize.user.builderPattern.builder.IUserBuilder;
-import com.digisphere.propertize.user.domain.Role;
-import com.digisphere.propertize.user.domain.User;
+import com.digisphere.propertize.application.user.builderPattern.builder.IUserBuilder;
+import com.digisphere.propertize.application.user.domain.Role;
+import com.digisphere.propertize.application.user.domain.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

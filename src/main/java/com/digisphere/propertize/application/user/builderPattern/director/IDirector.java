@@ -1,6 +1,6 @@
-package com.digisphere.propertize.user.builderPattern.director;
+package com.digisphere.propertize.application.user.builderPattern.director;
 
-import com.digisphere.propertize.user.domain.User;
+import com.digisphere.propertize.application.user.domain.User;
 
 public interface IDirector {
     void createAdmin(String name, String cpf, String phone);

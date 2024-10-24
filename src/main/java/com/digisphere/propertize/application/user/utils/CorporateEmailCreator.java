@@ -1,4 +1,4 @@
-package com.digisphere.propertize.user.utils;
+package com.digisphere.propertize.application.user.utils;
 
 public class CorporateEmailCreator {
 

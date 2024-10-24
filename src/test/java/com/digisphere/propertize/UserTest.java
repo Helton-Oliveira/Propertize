@@ -2,16 +2,15 @@ package com.digisphere.propertize;
 
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
-import com.digisphere.propertize.user.useCase.CreateUser;
-import com.digisphere.propertize.user.useCase.GetOneUser;
-import com.digisphere.propertize.user.useCase.strategyPattern.context.Context;
-import com.digisphere.propertize.user.useCase.strategyPattern.context.IContext;
+import com.digisphere.propertize.application.user.useCase.CreateUser;
+import com.digisphere.propertize.application.user.useCase.GetOneUser;
+import com.digisphere.propertize.application.user.useCase.strategyPattern.context.Context;
+import com.digisphere.propertize.application.user.useCase.strategyPattern.context.IContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

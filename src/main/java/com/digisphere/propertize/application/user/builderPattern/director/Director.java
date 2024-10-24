@@ -1,11 +1,11 @@
-package com.digisphere.propertize.user.builderPattern.director;
+package com.digisphere.propertize.application.user.builderPattern.director;
 
-import com.digisphere.propertize.user.builderPattern.builder.IUserBuilder;
-import com.digisphere.propertize.user.builderPattern.builder.UserBuilder;
-import com.digisphere.propertize.user.domain.Role;
-import com.digisphere.propertize.user.domain.User;
-import com.digisphere.propertize.user.utils.CorporateEmailCreator;
-import com.digisphere.propertize.user.utils.RandomPasswordGenerator;
+import com.digisphere.propertize.application.user.builderPattern.builder.IUserBuilder;
+import com.digisphere.propertize.application.user.builderPattern.builder.UserBuilder;
+import com.digisphere.propertize.application.user.domain.Role;
+import com.digisphere.propertize.application.user.domain.User;
+import com.digisphere.propertize.application.user.utils.CorporateEmailCreator;
+import com.digisphere.propertize.application.user.utils.RandomPasswordGenerator;
 
 import java.util.UUID;
 

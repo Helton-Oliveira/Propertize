@@ -3,7 +3,7 @@ package com.digisphere.propertize.infra.repository.stateContext;
 import com.digisphere.propertize.adapter.connection.PostgreSqlAdapter;
 import com.digisphere.propertize.infra.repository.sateRepository.StateRepository;
 import com.digisphere.propertize.infra.repository.sateRepository.UserRepository;
-import com.digisphere.propertize.user.builderPattern.builder.UserBuilder;
+import com.digisphere.propertize.application.user.builderPattern.builder.UserBuilder;
 
 import java.util.Map;
 

@@ -1,7 +1,7 @@
-package com.digisphere.propertize.user.builderPattern.builder;
+package com.digisphere.propertize.application.user.builderPattern.builder;
 
-import com.digisphere.propertize.user.domain.Role;
-import com.digisphere.propertize.user.domain.User;
+import com.digisphere.propertize.application.user.domain.Role;
+import com.digisphere.propertize.application.user.domain.User;
 
 import java.util.UUID;
 
