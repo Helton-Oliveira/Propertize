@@ -20,7 +20,8 @@ public interface IPropertyBuilder {
     void setBedroomCount(Integer bedroomCount);
     void setBathroomCount(Integer bathroomCount);
     void setHasGarage(Boolean hasGarage);
-    void setRentValue(Integer rentValue);
+    void setRentValue(Double rentValue);
     void setStatus(PropertyStatus status);
     void setConstructionDate(LocalDate constructionDate);
+    void setMaintenancePending(Boolean pending);
 }

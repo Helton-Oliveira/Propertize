@@ -70,7 +70,7 @@ public class PropertyBuilder implements IPropertyBuilder {
     }
 
     @Override
-    public void setRentValue(Integer rentValue) {
+    public void setRentValue(Double rentValue) {
         this.property.setRentValue(rentValue);
     }
 
@@ -82,5 +82,10 @@ public class PropertyBuilder implements IPropertyBuilder {
     @Override
     public void setConstructionDate(LocalDate constructionDate) {
         this.property.setConstructionDate(constructionDate);
+    }
+
+    @Override
+    public void setMaintenancePending(Boolean pending) {
+        this.property.setMaintenancePending(pending);
     }
 }
