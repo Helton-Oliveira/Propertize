@@ -1,5 +1,13 @@
 package com.digisphere.propertize.application.director;
 
+import com.digisphere.propertize.application.contract.Contract;
+import com.digisphere.propertize.application.contract.component.ContractStatus;
+import com.digisphere.propertize.application.contract.contractBuilder.ContractBuilder;
+import com.digisphere.propertize.application.contract.contractBuilder.IContractBuilder;
+import com.digisphere.propertize.application.contract.utils.CalculateContractPeriod;
+import com.digisphere.propertize.application.contract.utils.GenerateContractTerms;
+import com.digisphere.propertize.application.contract.utils.GenerateMaintenanceClause;
+import com.digisphere.propertize.application.contract.utils.TerminationFeePercentCalculate;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.property.domain.component.Address;
 import com.digisphere.propertize.application.property.domain.component.PropertyStatus;
@@ -21,6 +29,11 @@ public class Director implements IDirector {
 
     private  IUserBuilder userBuilder;
     private  IPropertyBuilder propertyBuilder;
+    private IContractBuilder contractBuilder;
+
+    private Director(IContractBuilder contractBuilder) {
+        this.contractBuilder = contractBuilder;
+    }
 
     private Director(IUserBuilder builder) {
         this.userBuilder = builder;
@@ -38,13 +51,29 @@ public class Director implements IDirector {
         return new Director(new UserBuilder());
     }
 
+    public static Director createContractDirector() {
+        return new Director(new ContractBuilder());
+    }
+
     @Override
     public Property buildProperty() {
         return propertyBuilder.getProperty();
     }
 
     @Override
-    public void createProperty(String ownerId, String description, Map<String, String> address, String type, Double size, Integer bedRoomCount, Integer bathRoomCount, Boolean hasGarage, Double rentValue, String status, LocalDate constructionDate) {
+    public void createProperty(
+            String ownerId,
+            String description,
+            Map<String, String> address,
+            String type,
+            Double size,
+            Integer bedRoomCount,
+            Integer bathRoomCount,
+            Boolean hasGarage,
+            Double rentValue,
+            String status,
+            LocalDate constructionDate
+    ) {
         propertyBuilder.setId(UUID.randomUUID());
         propertyBuilder.setOwnerId(UUID.fromString(ownerId));
         propertyBuilder.setDescription(description);
@@ -58,6 +87,31 @@ public class Director implements IDirector {
         propertyBuilder.setStatus(PropertyStatus.fromString(status));
         propertyBuilder.setConstructionDate(constructionDate);
         propertyBuilder.setMaintenancePending(false);
+    }
+
+    @Override
+    public void createContract(
+            UUID propertyId,
+            UUID tenantId,
+            LocalDate startDate,
+            Integer period,
+            Double monthlyRent,
+            Integer paymentDueDay,
+            Double securityDeposit,
+            Address address
+    ){
+        contractBuilder.setId(UUID.randomUUID());
+        contractBuilder.setPropertyId(propertyId);
+        contractBuilder.setTenantId(tenantId);
+        contractBuilder.setStartDate(startDate);
+        contractBuilder.setEndDate(CalculateContractPeriod.calculate(startDate, period));
+        contractBuilder.setMaintenanceClause(GenerateMaintenanceClause.generate());
+        contractBuilder.setMonthlyRent(monthlyRent);
+        contractBuilder.setPaymentDueDay(paymentDueDay);
+        contractBuilder.setSecurityDeposit(securityDeposit);
+        contractBuilder.setTerminationFee(TerminationFeePercentCalculate.calculate(period));
+        contractBuilder.setStatus(ContractStatus.ACTIVE);
+        contractBuilder.setContractTerms(GenerateContractTerms.generate(address.toString(), period, startDate, CalculateContractPeriod.calculate(startDate, period), monthlyRent, paymentDueDay, securityDeposit));
     }
 
     @Override
@@ -99,6 +153,11 @@ public class Director implements IDirector {
     @Override
     public User buildUser() {
         return userBuilder.getUser();
+    }
+
+    @Override
+    public Contract buildContract() {
+        return contractBuilder.build();
     }
 
 }
