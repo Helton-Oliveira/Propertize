@@ -78,4 +78,13 @@ public class Address {
     public void setPostalCode(String postal_code) {
         this.postalCode = postal_code;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                """
+                        Endereço: %s, %s - %s - %s, %s,CEP: %s.
+                        """, street, number, neighborhood, city, state, postalCode
+                );
+    }
 }
