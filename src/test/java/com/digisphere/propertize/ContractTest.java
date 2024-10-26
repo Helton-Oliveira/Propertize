@@ -2,12 +2,15 @@ package com.digisphere.propertize;
 
 import com.digisphere.propertize.application.contract.Contract;
 import com.digisphere.propertize.application.contract.useCase.CreateContract;
+import com.digisphere.propertize.application.contract.useCase.GetAllContracts;
+import com.digisphere.propertize.application.contract.useCase.GetOneContract;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,6 +35,30 @@ public class ContractTest {
         assertThat(contract.getId()).isNotNull();
         assertThat(contract.getTerminationFee()).isEqualTo(0.05);
         assertThat(contract.getEndDate().getYear()).isEqualTo(2026);
+
+    }
+
+    @Test
+    @DisplayName("Deve buscar 1 contrato")
+    void getOneContract() {
+        IRepositoryContext repositoryContext = new RepositoryContext();
+
+        var get = new GetOneContract(repositoryContext);
+        Contract contract = get.execute("fd3f2a74-6c6f-458d-aa27-9772bb25e02e");
+
+        assertThat(contract.getId().toString()).isEqualTo("fd3f2a74-6c6f-458d-aa27-9772bb25e02e");
+
+    }
+
+    @Test
+    @DisplayName("Deve buscar todos os contratos")
+    void getAllContracts() {
+        IRepositoryContext repositoryContext = new RepositoryContext();
+
+        var getAll = new GetAllContracts(repositoryContext);
+        List<Contract> contract = getAll.execute();
+
+        assertThat(contract.isEmpty()).isFalse();
 
     }
 }

@@ -2,13 +2,17 @@ package com.digisphere.propertize.infra.repository.sateRepository;
 
 import com.digisphere.propertize.adapter.connection.IConnection;
 import com.digisphere.propertize.application.contract.Contract;
+import com.digisphere.propertize.application.contract.component.ContractStatus;
 import com.digisphere.propertize.application.contract.contractBuilder.IContractBuilder;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class ContractRepository extends StateRepository{
 
@@ -37,12 +41,36 @@ public class ContractRepository extends StateRepository{
 
     @Override
     public <T> T getOne(String id) {
-        return null;
+        try {
+           var st = connection.query("SELECT * FROM contracts WHERE id = ?");
+            st.setObject(1, UUID.fromString(id));
+            var result = st.executeQuery();
+            if(!result.next()) throw new RuntimeException("NOT FOUND");
+            rebuild(result);
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return (T) contractBuilder.build();
     }
 
     @Override
     public <T> List<T> getAll() {
-        return List.of();
+        List<T> contractList = new ArrayList<>();
+        try {
+            var st = connection.query("SELECT * FROM contracts");
+            var result = st.executeQuery();
+
+            while(result.next()) {
+                rebuild(result);
+                contractList.add((T) contractBuilder.build());
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return contractList;
     }
 
     @Override
@@ -65,6 +93,26 @@ public class ContractRepository extends StateRepository{
         st.setDouble(10, contract.getTerminationFee());
         st.setString(11, contract.getMaintenanceClause());
         st.setString(12, contract.getContractTerms());
+    }
+
+    private void rebuild(ResultSet result) throws SQLException {
+        contractBuilder.setId(result.getObject("id", UUID.class));
+        contractBuilder.setPropertyId(result.getObject("property_id", UUID.class));
+        contractBuilder.setTenantId(result.getObject("tenant_id", UUID.class));
+        contractBuilder.setStartDate(result.getDate("start_date").toLocalDate());
+        contractBuilder.setEndDate(result.getDate("end_date").toLocalDate());
+        contractBuilder.setMonthlyRent(result.getDouble("monthly_rent"));
+        contractBuilder.setPaymentDueDay(result.getInt("payment_due_day"));
+        contractBuilder.setSecurityDeposit(result.getDouble("security_deposit"));
+        contractBuilder.setStatus(ContractStatus.valueOf(result.getString("contract_status")));
+        contractBuilder.setTerminationFee(result.getDouble("termination_fee"));
+        contractBuilder.setRenewable(result.getBoolean("is_renewable"));
+        contractBuilder.setAutoRenewal(result.getBoolean("auto_renewal"));
+        contractBuilder.setMaintenanceClause(result.getString("maintenance_clause"));
+        contractBuilder.setSubleasingAllowed(result.getBoolean("subleasing_allowed"));
+        contractBuilder.setContractTerms(result.getString("contract_terms"));
+        contractBuilder.setTerminationDate(result.getDate("termination_date") != null ? result.getDate("termination_date").toLocalDate() : null);
+        contractBuilder.setTerminationReason(result.getString("termination_reason"));
     }
 
 }
