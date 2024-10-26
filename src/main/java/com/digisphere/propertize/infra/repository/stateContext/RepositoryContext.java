@@ -1,7 +1,10 @@
 package com.digisphere.propertize.infra.repository.stateContext;
 
+import com.digisphere.propertize.adapter.connection.IConnection;
 import com.digisphere.propertize.adapter.connection.PostgreSqlAdapter;
+import com.digisphere.propertize.application.contract.contractBuilder.ContractBuilder;
 import com.digisphere.propertize.application.property.domain.propertyBuilder.builder.PropertyBuilder;
+import com.digisphere.propertize.infra.repository.sateRepository.ContractRepository;
 import com.digisphere.propertize.infra.repository.sateRepository.PropertyRepository;
 import com.digisphere.propertize.infra.repository.sateRepository.StateRepository;
 import com.digisphere.propertize.infra.repository.sateRepository.UserRepository;
@@ -12,10 +15,12 @@ import java.util.Map;
 
 public class RepositoryContext implements IRepositoryContext {
     private StateRepository stateRepository;
+    private IConnection connection = new PostgreSqlAdapter();
 
     public void changeState(String state) {
-        if (state.equalsIgnoreCase("users")) this.stateRepository = new UserRepository(new PostgreSqlAdapter(), new UserBuilder());
-        if (state.equalsIgnoreCase("properties")) this.stateRepository = new PropertyRepository(new PostgreSqlAdapter(), new PropertyBuilder());
+        if (state.equalsIgnoreCase("users")) this.stateRepository = new UserRepository(connection, new UserBuilder());
+        if (state.equalsIgnoreCase("properties")) this.stateRepository = new PropertyRepository(connection, new PropertyBuilder());
+        if (state.equalsIgnoreCase("contracts")) this.stateRepository = new ContractRepository(connection, new ContractBuilder());
     }
 
     @Override
@@ -43,5 +48,6 @@ public class RepositoryContext implements IRepositoryContext {
     public String delete(String id) {
         return stateRepository.delete(id);
     }
+
 
 }
