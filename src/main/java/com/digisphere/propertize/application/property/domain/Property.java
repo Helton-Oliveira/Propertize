@@ -17,9 +17,18 @@ public class Property {
     private Integer bedroomCount;
     private Integer bathroomCount;
     private Boolean hasGarage;
-    private Integer rentValue;
+    private Double rentValue;
     private PropertyStatus status;
     private LocalDate constructionDate;
+    private Boolean maintenancePending;
+
+    public Boolean getMaintenancePending() {
+        return maintenancePending;
+    }
+
+    public void setMaintenancePending(Boolean maintenancePending) {
+        this.maintenancePending = maintenancePending;
+    }
 
     public UUID getOwnerId() {
         return ownerId;
@@ -93,11 +102,11 @@ public class Property {
         this.hasGarage = hasGarage;
     }
 
-    public Integer getRentValue() {
+    public Double getRentValue() {
         return rentValue;
     }
 
-    public void setRentValue(Integer rentValue) {
+    public void setRentValue(Double rentValue) {
         this.rentValue = rentValue;
     }
 

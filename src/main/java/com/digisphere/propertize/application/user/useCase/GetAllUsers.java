@@ -16,8 +16,7 @@ public class GetAllUsers implements IGetAllUsers {
     @Override
     public List<User> execute() {
         repositoryContext.changeState("users");
-        var userList = repositoryContext.getAll();
-        return userList.stream()
+        return repositoryContext.getAll().stream()
                 .map(u -> (User) u )
                 .toList();
     }
