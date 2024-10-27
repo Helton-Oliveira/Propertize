@@ -25,15 +25,7 @@ public interface IDirector {
             Double rentValue,
             String status,
             LocalDate constructionDate);
-    void createContract(
-            UUID propertyId,
-            UUID tenantId,
-            LocalDate startDate,
-            Integer period,
-            Double monthlyRent,
-            Integer paymentDueDay,
-            Double securityDeposit,
-            Address address);
+    void createContract(Map<String, String> data);
     Property buildProperty();
     User buildUser();
     Contract buildContract();

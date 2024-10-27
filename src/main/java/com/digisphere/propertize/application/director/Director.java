@@ -90,19 +90,19 @@ public class Director implements IDirector {
     }
 
     @Override
-    public void createContract(
-            UUID propertyId,
-            UUID tenantId,
-            LocalDate startDate,
-            Integer period,
-            Double monthlyRent,
-            Integer paymentDueDay,
-            Double securityDeposit,
-            Address address
-    ){
+    public void createContract(Map<String, String> data){
+
+        System.out.println(data);
+
+        var startDate = LocalDate.parse(data.get("startDate"));
+        var period = Integer.parseInt(data.get("period"));
+        var monthlyRent = Double.valueOf(data.get("monthlyRent"));
+        var paymentDueDay = Integer.parseInt(data.get("paymentDueDay"));
+        var securityDeposit = Double.valueOf(data.get("securityDeposit"));
+
         contractBuilder.setId(UUID.randomUUID());
-        contractBuilder.setPropertyId(propertyId);
-        contractBuilder.setTenantId(tenantId);
+        contractBuilder.setPropertyId(UUID.fromString(data.get("propertyId")));
+        contractBuilder.setTenantId(UUID.fromString(data.get("tenantId")));
         contractBuilder.setStartDate(startDate);
         contractBuilder.setEndDate(CalculateContractPeriod.calculate(startDate, period));
         contractBuilder.setMaintenanceClause(GenerateMaintenanceClause.generate());
@@ -111,7 +111,7 @@ public class Director implements IDirector {
         contractBuilder.setSecurityDeposit(securityDeposit);
         contractBuilder.setTerminationFee(TerminationFeePercentCalculate.calculate(period));
         contractBuilder.setStatus(ContractStatus.ACTIVE);
-        contractBuilder.setContractTerms(GenerateContractTerms.generate(address.toString(), period, startDate, CalculateContractPeriod.calculate(startDate, period), monthlyRent, paymentDueDay, securityDeposit));
+        contractBuilder.setContractTerms(GenerateContractTerms.generate(data.get("address"), period, startDate, CalculateContractPeriod.calculate(startDate, period), monthlyRent, paymentDueDay, securityDeposit));
     }
 
     @Override

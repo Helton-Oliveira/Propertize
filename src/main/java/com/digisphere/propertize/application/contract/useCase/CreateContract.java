@@ -28,17 +28,14 @@ public class CreateContract implements ICreateContract {
 
         if(!user.getRole().toString().equalsIgnoreCase("tenant")) throw new RuntimeException("ERRO SÓ É POSSÍVEL VINCULAR INQUILINOS AOS CONTRATOS");
 
+        data.put("propertyId", property.getId().toString());
+        data.put("ownerId", user.getId().toString());
+        data.put("startDate", LocalDate.now().toString());
+        data.put("monthlyRent", property.getRentValue().toString());
+        data.put("address", property.getAddress().toString());
+
         var director = Director.createContractDirector();
-        director.createContract(
-                property.getId(),
-                user.getId(),
-                LocalDate.now(),
-                Integer.parseInt(data.get("period")),
-                property.getRentValue(),
-                Integer.parseInt(data.get("paymentDueDay")),
-                Double.valueOf(data.get("securityDeposit")),
-                property.getAddress()
-                );
+        director.createContract(data);
 
         var contract = director.buildContract();
         Map<String, Object> contractMap = new HashMap<>();
