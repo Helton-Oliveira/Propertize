@@ -22,6 +22,9 @@ public class CreateContract implements ICreateContract {
     public Contract execute(Map<String, String> data) {
         repositoryContext.changeState("properties");
         Property property = repositoryContext.getOne(data.get("propertyId"));
+        Map <String, String> updatePropertyStatus = new HashMap<>();
+        updatePropertyStatus.put("status", "alugado");
+        repositoryContext.update(property.getId().toString(), updatePropertyStatus);
 
         repositoryContext.changeState("users");
         User user = repositoryContext.getOne(data.get("tenantId"));

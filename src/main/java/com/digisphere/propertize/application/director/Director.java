@@ -92,8 +92,6 @@ public class Director implements IDirector {
     @Override
     public void createContract(Map<String, String> data){
 
-        System.out.println(data);
-
         var startDate = LocalDate.parse(data.get("startDate"));
         var period = Integer.parseInt(data.get("period"));
         var monthlyRent = Double.valueOf(data.get("monthlyRent"));

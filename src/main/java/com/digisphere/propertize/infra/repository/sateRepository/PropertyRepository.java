@@ -154,7 +154,7 @@ public class PropertyRepository extends StateRepository {
     private void changeUpdate(String column, PreparedStatement st,  Map<String, String> updateData) throws SQLException {
         switch (column){
             case "maintenance_pending" -> st.setBoolean(1, Boolean.valueOf(updateData.get("maintenancePending")));
-            case "status" -> st.setString(1, updateData.get("status"));
+            case "status" -> st.setString(1, PropertyStatus.fromString(updateData.get("status")).name());
             case "rent_value" -> st.setBigDecimal(1, BigDecimal.valueOf(Long.parseLong(updateData.get("rentValue"))));
         }
     }
