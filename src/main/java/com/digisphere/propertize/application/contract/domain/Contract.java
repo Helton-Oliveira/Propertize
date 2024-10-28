@@ -1,6 +1,6 @@
-package com.digisphere.propertize.application.contract;
+package com.digisphere.propertize.application.contract.domain;
 
-import com.digisphere.propertize.application.contract.component.ContractStatus;
+import com.digisphere.propertize.application.contract.domain.component.ContractStatus;
 
 import java.time.LocalDate;
 import java.util.UUID;

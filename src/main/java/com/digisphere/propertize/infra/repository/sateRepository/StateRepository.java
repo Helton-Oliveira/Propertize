@@ -8,5 +8,5 @@ public abstract class StateRepository {
     public abstract <T> T getOne(String id );
     public abstract <T> List<T> getAll();
     public String delete(String id){return null;}
-    public String update(String id, Map<String, String> updateData){ return null; }
+    public abstract String update(String id, Map<String, String> updateData);
 }

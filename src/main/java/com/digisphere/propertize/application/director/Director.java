@@ -1,7 +1,7 @@
 package com.digisphere.propertize.application.director;
 
-import com.digisphere.propertize.application.contract.Contract;
-import com.digisphere.propertize.application.contract.component.ContractStatus;
+import com.digisphere.propertize.application.contract.domain.Contract;
+import com.digisphere.propertize.application.contract.domain.component.ContractStatus;
 import com.digisphere.propertize.application.contract.contractBuilder.ContractBuilder;
 import com.digisphere.propertize.application.contract.contractBuilder.IContractBuilder;
 import com.digisphere.propertize.application.contract.utils.CalculateContractPeriod;

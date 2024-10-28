@@ -1,8 +1,8 @@
 package com.digisphere.propertize.infra.repository.sateRepository;
 
 import com.digisphere.propertize.adapter.connection.IConnection;
-import com.digisphere.propertize.application.contract.Contract;
-import com.digisphere.propertize.application.contract.component.ContractStatus;
+import com.digisphere.propertize.application.contract.domain.Contract;
+import com.digisphere.propertize.application.contract.domain.component.ContractStatus;
 import com.digisphere.propertize.application.contract.contractBuilder.IContractBuilder;
 
 import java.sql.Date;
@@ -76,6 +76,41 @@ public class ContractRepository extends StateRepository{
     @Override
     public String delete(String id) {
         return null;
+    }
+
+    @Override
+    public String update(String id, Map<String, String> updateData) {
+        String column = "";
+        if(updateData.containsKey("status")) column = "contract_status = ?";
+        if(updateData.containsKey("terminationDate") || updateData.containsKey("terminationReason")) column = "termination_date = ?, termination_reason = ?";
+
+        try {
+            var st = connection.query("UPDATE contracts SET " + column + " WHERE id = ?");
+            changeUpdate(updateData, st, id);
+            var result = st.executeUpdate();
+
+            if(result == 0) throw new RuntimeException("ERRO! CONTRATO NAO ATUALIZADO");
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return "CONTRATO ATUALIZADO NA COLUNA " + column.replaceAll("[^a-zA-Z0-9\\s]", "")
+                .replaceAll("\\s+", " ")
+                .toUpperCase().trim();
+    }
+
+    private void changeUpdate(Map<String, String> updateData, PreparedStatement st, String id) throws SQLException {
+        if(updateData.containsKey("terminationDate")) {
+            st.setDate(1, Date.valueOf(updateData.get("terminationDate")));
+            st.setString(2, updateData.get("terminationReason"));
+            st.setObject(3, UUID.fromString(id));
+        }
+
+        if (updateData.containsKey("status")) {
+            st.setString(1, ContractStatus.fromString(updateData.get("status")).toString());
+            st.setObject(2, UUID.fromString(id));
+        }
     }
 
     private void buildInsertion(PreparedStatement st, Map<String, Object> data) throws SQLException {

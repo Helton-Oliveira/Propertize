@@ -1,9 +1,10 @@
 package com.digisphere.propertize;
 
-import com.digisphere.propertize.application.contract.Contract;
+import com.digisphere.propertize.application.contract.domain.Contract;
 import com.digisphere.propertize.application.contract.useCase.CreateContract;
 import com.digisphere.propertize.application.contract.useCase.GetAllContracts;
 import com.digisphere.propertize.application.contract.useCase.GetOneContract;
+import com.digisphere.propertize.application.contract.useCase.UpdateContract;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
 import org.junit.jupiter.api.DisplayName;
@@ -59,6 +60,19 @@ public class ContractTest {
         List<Contract> contract = getAll.execute();
 
         assertThat(contract.isEmpty()).isFalse();
+    }
 
+    @Test
+    @DisplayName("Deve atualizar um contrato")
+    void updateContract() {
+        IRepositoryContext repositoryContext = new RepositoryContext();
+        Map<String, String> data = new HashMap<>();
+        data.put("terminationDate","2024-10-28");
+        data.put("terminationReason", "optou por mudar para outro local");
+
+        var update = new UpdateContract(repositoryContext);
+        var contract = update.execute("a922bd54-0d01-4609-8559-d67163ec6daf", data);
+
+        assertThat(contract).isEqualTo("CONTRATO ATUALIZADO NA COLUNA TERMINATIONDATE TERMINATIONREASON");
     }
 }

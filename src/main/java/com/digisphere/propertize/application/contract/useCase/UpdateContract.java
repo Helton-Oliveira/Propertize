@@ -1,20 +1,19 @@
 package com.digisphere.propertize.application.contract.useCase;
 
-import com.digisphere.propertize.application.contract.domain.Contract;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
-public class GetOneContract implements IGetOneContract{
+import java.util.Map;
 
+public class UpdateContract implements  IUpdateContract{
     private final IRepositoryContext repositoryContext;
 
-    public GetOneContract(IRepositoryContext repositoryContext) {
+    public UpdateContract(IRepositoryContext repositoryContext) {
         this.repositoryContext = repositoryContext;
     }
 
     @Override
-    public Contract execute(String id) {
+    public String execute(String id, Map<String, String> data) {
         repositoryContext.changeState("contracts");
-        Contract contract = repositoryContext.getOne(id);
-        return contract;
+        return repositoryContext.update(id, data);
     }
 }

@@ -1,14 +1,11 @@
 package com.digisphere.propertize.application.director;
 
-import com.digisphere.propertize.application.contract.Contract;
-import com.digisphere.propertize.application.contract.component.ContractStatus;
+import com.digisphere.propertize.application.contract.domain.Contract;
 import com.digisphere.propertize.application.property.domain.Property;
-import com.digisphere.propertize.application.property.domain.component.Address;
 import com.digisphere.propertize.application.user.domain.User;
 
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.UUID;
 
 public interface IDirector {
     void createAdmin(String name, String cpf, String phone);

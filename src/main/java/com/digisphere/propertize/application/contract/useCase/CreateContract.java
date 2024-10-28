@@ -1,6 +1,6 @@
 package com.digisphere.propertize.application.contract.useCase;
 
-import com.digisphere.propertize.application.contract.Contract;
+import com.digisphere.propertize.application.contract.domain.Contract;
 import com.digisphere.propertize.application.director.Director;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.user.domain.User;

@@ -1,4 +1,4 @@
-package com.digisphere.propertize.application.contract.component;
+package com.digisphere.propertize.application.contract.domain.component;
 
 public enum ContractStatus {
     ACTIVE("ativo"),

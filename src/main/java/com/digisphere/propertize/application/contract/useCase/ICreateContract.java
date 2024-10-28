@@ -1,6 +1,6 @@
 package com.digisphere.propertize.application.contract.useCase;
 
-import com.digisphere.propertize.application.contract.Contract;
+import com.digisphere.propertize.application.contract.domain.Contract;
 
 import java.util.Map;
 
