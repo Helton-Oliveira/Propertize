@@ -32,7 +32,7 @@ public class CreateUser implements ICreateUser {
         dataForNotify.put("userName", user.getName());
         dataForNotify.put("password", user.getPassword());
         eventManager.subscribe("emailAlert");
-        eventManager.notifySubscribers(dataForNotify);
+        eventManager.notifyAll(dataForNotify);
 
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("user", user);

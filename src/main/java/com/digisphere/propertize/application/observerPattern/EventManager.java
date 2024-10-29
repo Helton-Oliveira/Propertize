@@ -7,19 +7,26 @@ import java.util.Map;
 public class EventManager implements IEventManager {
 
     private List<IObserver> observers = new ArrayList<>();
+    private IObserver observer;
 
     @Override
     public void subscribe(String eventType) {
-        if (eventType.equalsIgnoreCase("emailAlert")) observers.add(new EmailAlertListener());
+        if (eventType.equalsIgnoreCase("EMAILALERT")) this.observer = new EmailAlertListener();
+        observers.add(this.observer);
     }
 
     @Override
     public void unsubscribe(IObserver listener) {
-        observers.remove(listener);
+        observers.removeIf(l -> l.equals(listener));
     }
 
     @Override
-    public void notifySubscribers(Map<String, String> data) {
+    public void notifySubscribe(Map<String, String> data) {
+        observer.update(data);
+    }
+
+    @Override
+    public void notifyAll(Map<String, String> data) {
         observers.forEach(l -> l.update(data));
     }
 

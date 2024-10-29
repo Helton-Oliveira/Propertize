@@ -5,5 +5,6 @@ import java.util.Map;
 public interface IEventManager {
     void subscribe(String eventType);
     void unsubscribe(IObserver listener);
-    void notifySubscribers(Map<String, String> data);
+    void notifySubscribe(Map<String, String> data);
+    void notifyAll(Map<String, String> data);
 }
