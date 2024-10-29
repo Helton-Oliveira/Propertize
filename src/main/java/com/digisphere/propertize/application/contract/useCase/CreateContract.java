@@ -47,6 +47,7 @@ public class CreateContract implements ICreateContract {
         repositoryContext.changeState("contracts");
         var isSaved = repositoryContext.save(contractMap);
         if(!isSaved) throw new RuntimeException("ERRO AO SALVAR CONTRATO");
+
         return contract;
     }
 }

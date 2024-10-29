@@ -1,5 +1,8 @@
 package com.digisphere.propertize;
 
+import com.digisphere.propertize.application.observerPattern.EmailAlertListener;
+import com.digisphere.propertize.application.observerPattern.EventManager;
+import com.digisphere.propertize.application.observerPattern.IEventManager;
 import com.digisphere.propertize.application.user.useCase.*;
 import com.digisphere.propertize.application.user.useCase.strategyPattern.context.Context;
 import com.digisphere.propertize.application.user.useCase.strategyPattern.context.IContext;
@@ -22,12 +25,13 @@ public class UserTest {
         Map<String, String> input = new HashMap<>();
         IContext context = new Context();
         IRepositoryContext stateContext = new RepositoryContext();
+        IEventManager eventManager = new EventManager();
 
         input.put("name", "Richard Robson");
         input.put("cpf", "1234567890");
         input.put("phone", "19 99845577");
 
-        var admin = new CreateUser(stateContext, context);
+        var admin = new CreateUser(stateContext, context, eventManager);
         var result = admin.execute(input);
 
         assertThat(result.getRole().toString()).isEqualTo("ADMIN");
@@ -40,6 +44,7 @@ public class UserTest {
         Map<String, String> input = new HashMap<>();
         IContext context = new Context();
         IRepositoryContext stateContext = new RepositoryContext();
+        IEventManager eventManager = new EventManager();
 
         input.put("name", "Edina Moura");
         input.put("cpf", "1234567890");
@@ -47,7 +52,7 @@ public class UserTest {
         input.put("email", "edinaMoura@gmail.com");
         input.put("role", "tenant");
 
-        var tenant = new CreateUser(stateContext, context);
+        var tenant = new CreateUser(stateContext, context, eventManager);
         var result = tenant.execute(input);
 
         assertThat(result.getRole().toString()).isEqualTo("TENANT");
@@ -59,14 +64,14 @@ public class UserTest {
         Map<String, String> input = new HashMap<>();
         IContext context = new Context();
         IRepositoryContext stateContext = new RepositoryContext();
-
+        IEventManager eventManager = new EventManager();
         input.put("name", "Diego HDM");
         input.put("cpf", "1234567890");
         input.put("phone", "19 99845577");
         input.put("email", "hdm@gmail.com");
         input.put("role", "owner");
 
-        var tenant = new CreateUser(stateContext, context);
+        var tenant = new CreateUser(stateContext, context, eventManager);
         var result = tenant.execute(input);
 
         assertThat(result.getRole().toString()).isEqualTo("OWNER");
