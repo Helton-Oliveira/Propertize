@@ -46,10 +46,10 @@ public class UserTest {
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
 
-        input.put("name", "Edina Moura");
+        input.put("name", "Helton Oliveira");
         input.put("cpf", "1234567890");
         input.put("phone", "19 99845577");
-        input.put("email", "edinaMoura@gmail.com");
+        input.put("email", "heltonhenriqueoliveira321@gmail.com");
         input.put("role", "tenant");
 
         var tenant = new CreateUser(stateContext, context, eventManager);
