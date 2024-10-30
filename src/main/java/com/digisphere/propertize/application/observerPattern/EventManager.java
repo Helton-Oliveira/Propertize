@@ -11,7 +11,7 @@ public class EventManager implements IEventManager {
 
     @Override
     public void subscribe(String eventType) {
-        if (eventType.equalsIgnoreCase("EMAILALERT")) this.observer = new EmailAlertListener();
+        if (eventType.equalsIgnoreCase("EMAILALERT")) this.observer = new EmailAlertObserver();
         observers.add(this.observer);
     }
 

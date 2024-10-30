@@ -1,6 +1,5 @@
 package com.digisphere.propertize;
 
-import com.digisphere.propertize.application.observerPattern.EmailAlertListener;
 import com.digisphere.propertize.application.observerPattern.EventManager;
 import com.digisphere.propertize.application.observerPattern.IEventManager;
 import com.digisphere.propertize.application.user.useCase.*;

@@ -1,16 +1,15 @@
 package com.digisphere.propertize.application.observerPattern;
 
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.stereotype.Component;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 
-public class EmailAlertListener implements IObserver {
+public class EmailAlertObserver implements IObserver {
 
     private  JavaMailSender mailSender;
 
@@ -44,22 +43,16 @@ public class EmailAlertListener implements IObserver {
     public void update(Map<String, String> data) {
 
         try {
+            this.setMailSender(createMailSender());
             var properties = getPasswordEmail();
-            mailSender = createMailSender();
-            var message = new SimpleMailMessage();
+            var mimeMessage = createMailSender().createMimeMessage();
+            var message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
             message.setFrom(properties.getProperty("EMAIL_USERNAME"));
             message.setTo(data.get("email"));
             message.setSubject("CREDENCIAIS PROPERTIZE");
-            message.setText(String.format("""
-                    Bem-Vindo(a) a propertize
-                                   \s
-                    abaixo estão suas credenciais de acesso ao sistema:\s
-                    (obs: lembre-se de trocar a senha padrao)
-                                   \s
-                    Nome de usuário: %s
-                    Senha: %s
-                   \s""", data.get("userName"), data.get("password")));
-            mailSender.send(message);
+            message.setText(createHtmlString(data.get("userName"), data.get("password")), true);
+            mailSender.send(mimeMessage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -71,5 +64,23 @@ public class EmailAlertListener implements IObserver {
         properties.load(input);
 
         return properties;
+    }
+
+    private String createHtmlString(String userName, String password) {
+        return String.format("""
+                <html>
+                    <body>
+                        <h1>Bem-vindo(a) à Propertize!</h1>
+                        <h2>Abaixo estão suas credenciais de acesso ao sistema:</h2>
+                        <p><strong>Nome de usuário:</strong> %s</p>
+                        <p><strong>Senha:</strong> %s</p>
+                        <p><em>Obs: lembre-se de trocar a senha padrão</em></p>
+                    </body>
+                </html>
+            """, userName, password);
+    }
+
+    private void setMailSender(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
     }
 }
