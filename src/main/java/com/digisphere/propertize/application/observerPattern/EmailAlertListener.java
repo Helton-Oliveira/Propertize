@@ -19,8 +19,8 @@ public class EmailAlertListener implements IObserver {
             var properties = getPasswordEmail();
             JavaMailSenderImpl impl = new JavaMailSenderImpl();
 
-            impl.setHost("smtp.gmail.com");
-            impl.setPort(587);
+            impl.setHost((String) properties.get("EMAIL_HOST"));
+            impl.setPort(Integer.parseInt(properties.getProperty("EMAIL_PORT")));
 
             impl.setUsername(properties.getProperty("EMAIL_USERNAME"));
             impl.setPassword(properties.getProperty("EMAIL_PASS"));
