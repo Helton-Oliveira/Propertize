@@ -1,7 +1,7 @@
 package com.digisphere.propertize;
 
-import com.digisphere.propertize.application.observerPattern.EventManager;
-import com.digisphere.propertize.application.observerPattern.IEventManager;
+import com.digisphere.propertize.application.observerPattern.subject.EventManager;
+import com.digisphere.propertize.application.observerPattern.subject.IEventManager;
 import com.digisphere.propertize.application.user.useCase.*;
 import com.digisphere.propertize.application.user.useCase.strategyPattern.context.Context;
 import com.digisphere.propertize.application.user.useCase.strategyPattern.context.IContext;
@@ -64,10 +64,10 @@ public class UserTest {
         IContext context = new Context();
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
-        input.put("name", "Diego HDM");
+        input.put("name", "Karla Maynny");
         input.put("cpf", "1234567890");
         input.put("phone", "19 99845577");
-        input.put("email", "hdm@gmail.com");
+        input.put("email", "karlamaynny2017@gmail.com");
         input.put("role", "owner");
 
         var tenant = new CreateUser(stateContext, context, eventManager);

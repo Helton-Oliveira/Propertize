@@ -1,4 +1,8 @@
-package com.digisphere.propertize.application.observerPattern;
+package com.digisphere.propertize.application.observerPattern.subject;
+
+import com.digisphere.propertize.application.observerPattern.observers.EmailAlertObserver;
+import com.digisphere.propertize.application.observerPattern.observers.IObserver;
+import com.digisphere.propertize.application.user.builderPattern.builder.IUserBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +12,7 @@ public class EventManager implements IEventManager {
 
     private List<IObserver> observers = new ArrayList<>();
     private IObserver observer;
+    private IUserBuilder builder;
 
     @Override
     public void subscribe(String eventType) {
@@ -29,5 +34,7 @@ public class EventManager implements IEventManager {
     public void notifyAll(Map<String, String> data) {
         observers.forEach(l -> l.update(data));
     }
+
+
 
 }

@@ -1,4 +1,4 @@
-package com.digisphere.propertize.application.observerPattern;
+package com.digisphere.propertize.application.observerPattern.observers;
 
 import java.util.Map;
 
