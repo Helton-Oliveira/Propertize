@@ -58,7 +58,7 @@ public class MaintenanceProtocolRepository extends StateRepository{
     public <T> List<T> getAll() {
         List<T> maintenanceProtocols = new ArrayList<>();
         try {
-            var st = connection.query("SELECT * FROM maintenance_protocols WHERE maintenance_status IN ('OPEN')");
+            var st = connection.query("SELECT * FROM maintenance_protocols WHERE maintenance_status IN ('OPEN', 'IN_PROGRESS')");
             var result = st.executeQuery();
 
             while (result.next()) {

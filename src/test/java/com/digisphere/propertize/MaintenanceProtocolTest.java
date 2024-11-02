@@ -52,9 +52,12 @@ public class MaintenanceProtocolTest {
         IRepositoryContext repositoryContext = new RepositoryContext();
 
         var getAll = new PickUpOpenMaintenanceProtocols(repositoryContext);
-        List<MaintenanceProtocol> protocol = getAll.execute();
+        List<MaintenanceProtocol> protocols = getAll.execute();
 
-        assertThat(protocol).isNotEmpty();
+        protocols.forEach(p -> {
+            assertThat(p.getStatus().toString()).isNotEqualTo(MaintenanceStatus.CANCELED.name());
+            assertThat(p.getStatus().toString()).isNotEqualTo(MaintenanceStatus.COMPLETED.name());
+        });
     }
 
     @Test
