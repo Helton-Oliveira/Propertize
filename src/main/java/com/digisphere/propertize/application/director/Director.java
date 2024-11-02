@@ -8,6 +8,10 @@ import com.digisphere.propertize.application.contract.utils.CalculateContractPer
 import com.digisphere.propertize.application.contract.utils.GenerateContractTerms;
 import com.digisphere.propertize.application.contract.utils.GenerateMaintenanceClause;
 import com.digisphere.propertize.application.contract.utils.TerminationFeePercentCalculate;
+import com.digisphere.propertize.application.maintenance.domain.MaintenanceProtocol;
+import com.digisphere.propertize.application.maintenance.domain.component.MaintenanceStatus;
+import com.digisphere.propertize.application.maintenance.maintenanceBuilder.IMaintenanceBuilder;
+import com.digisphere.propertize.application.maintenance.maintenanceBuilder.MaintenanceBuilder;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.property.domain.component.Address;
 import com.digisphere.propertize.application.property.domain.component.PropertyStatus;
@@ -26,27 +30,33 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Director implements IDirector {
-
     private IUserBuilder userBuilder;
     private IPropertyBuilder propertyBuilder;
     private IContractBuilder contractBuilder;
+    private IMaintenanceBuilder maintenanceBuilder;
 
-    public static Director createPropertyDirector() {
+    public static IDirector createPropertyDirector() {
         var propertyDirector =  new Director();
         propertyDirector.setPropertyBuilder(new PropertyBuilder());
         return propertyDirector;
     }
 
-    public static Director createUserDirector() {
+    public static IDirector createUserDirector() {
         var userDirector = new Director();
         userDirector.setUserBuilder(new UserBuilder());
         return userDirector;
     }
 
-    public static Director createContractDirector() {
+    public static IDirector createContractDirector() {
         var contractDirector = new Director();
         contractDirector.setContractBuilder(new ContractBuilder());
         return contractDirector;
+    }
+
+    public static IDirector createMaintenanceProtocolDirector() {
+        var maintenanceProtocolDirector = new Director();
+        maintenanceProtocolDirector.setMaintenanceBuilder(new MaintenanceBuilder());
+        return maintenanceProtocolDirector;
     }
 
     @Override
@@ -107,6 +117,16 @@ public class Director implements IDirector {
     }
 
     @Override
+    public void createMaintenanceProtocol(Map<String, String> data) {
+        maintenanceBuilder.setProtocol(UUID.randomUUID());
+        maintenanceBuilder.setPropertyId(UUID.fromString(data.get("propertyId")));
+        maintenanceBuilder.setRequestingTenantId(UUID.fromString(data.get("tenantId")));
+        maintenanceBuilder.setOpeningDate(LocalDate.now());
+        maintenanceBuilder.setMaintenanceDetails(data.get("MaintenanceDetails"));
+        maintenanceBuilder.setMaintenanceStatus(MaintenanceStatus.OPEN);
+    }
+
+    @Override
     public void createAdmin(String name, String cpf, String phone) {
         userBuilder.setId(UUID.randomUUID());
         userBuilder.setName(name);
@@ -152,15 +172,23 @@ public class Director implements IDirector {
         return contractBuilder.build();
     }
 
-    public void setUserBuilder(IUserBuilder userBuilder) {
+    @Override
+    public MaintenanceProtocol buildMaintenanceProtocol() {
+        return maintenanceBuilder.build();
+    }
+
+    private void setUserBuilder(IUserBuilder userBuilder) {
         this.userBuilder = userBuilder;
     }
 
-    public void setPropertyBuilder(IPropertyBuilder propertyBuilder) {
+    private void setPropertyBuilder(IPropertyBuilder propertyBuilder) {
         this.propertyBuilder = propertyBuilder;
     }
 
-    public void setContractBuilder(IContractBuilder contractBuilder) {
+    private void setContractBuilder(IContractBuilder contractBuilder) {
         this.contractBuilder = contractBuilder;
+    }
+    private void setMaintenanceBuilder(IMaintenanceBuilder maintenanceBuilder) {
+        this.maintenanceBuilder = maintenanceBuilder;
     }
 }

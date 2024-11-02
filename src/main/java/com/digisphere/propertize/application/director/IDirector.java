@@ -1,6 +1,7 @@
 package com.digisphere.propertize.application.director;
 
 import com.digisphere.propertize.application.contract.domain.Contract;
+import com.digisphere.propertize.application.maintenance.domain.MaintenanceProtocol;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.user.domain.User;
 
@@ -23,8 +24,9 @@ public interface IDirector {
             String status,
             LocalDate constructionDate);
     void createContract(Map<String, String> data);
+    void createMaintenanceProtocol(Map<String, String> data);
     Property buildProperty();
     User buildUser();
     Contract buildContract();
-
+    MaintenanceProtocol buildMaintenanceProtocol();
 }
