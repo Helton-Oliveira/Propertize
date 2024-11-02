@@ -27,32 +27,26 @@ import java.util.UUID;
 
 public class Director implements IDirector {
 
-    private  IUserBuilder userBuilder;
-    private  IPropertyBuilder propertyBuilder;
+    private IUserBuilder userBuilder;
+    private IPropertyBuilder propertyBuilder;
     private IContractBuilder contractBuilder;
 
-    private Director(IContractBuilder contractBuilder) {
-        this.contractBuilder = contractBuilder;
-    }
-
-    private Director(IUserBuilder builder) {
-        this.userBuilder = builder;
-    }
-
-    private Director(IPropertyBuilder propertyBuilder) {
-        this.propertyBuilder = propertyBuilder;
-    }
-
     public static Director createPropertyDirector() {
-        return new Director(new PropertyBuilder());
+        var propertyDirector =  new Director();
+        propertyDirector.setPropertyBuilder(new PropertyBuilder());
+        return propertyDirector;
     }
 
     public static Director createUserDirector() {
-        return new Director(new UserBuilder());
+        var userDirector = new Director();
+        userDirector.setUserBuilder(new UserBuilder());
+        return userDirector;
     }
 
     public static Director createContractDirector() {
-        return new Director(new ContractBuilder());
+        var contractDirector = new Director();
+        contractDirector.setContractBuilder(new ContractBuilder());
+        return contractDirector;
     }
 
     @Override
@@ -158,4 +152,15 @@ public class Director implements IDirector {
         return contractBuilder.build();
     }
 
+    public void setUserBuilder(IUserBuilder userBuilder) {
+        this.userBuilder = userBuilder;
+    }
+
+    public void setPropertyBuilder(IPropertyBuilder propertyBuilder) {
+        this.propertyBuilder = propertyBuilder;
+    }
+
+    public void setContractBuilder(IContractBuilder contractBuilder) {
+        this.contractBuilder = contractBuilder;
+    }
 }
