@@ -8,7 +8,7 @@ import java.util.UUID;
 public class MaintenanceProtocol {
     private UUID protocol;
     private UUID requestingTenantId;
-    private UUID propertyId;
+    private UUID propertyIdForMaintenance;
     private LocalDate openingDate;
     private LocalDate dateOfResolution;
     private String maintenanceDetails;
@@ -39,12 +39,12 @@ public class MaintenanceProtocol {
         this.requestingTenantId = requestingTenantId;
     }
 
-    public UUID getPropertyId() {
-        return propertyId;
+    public UUID getPropertyIdForMaintenance() {
+        return propertyIdForMaintenance;
     }
 
-    public void setPropertyId(UUID propertyId) {
-        this.propertyId = propertyId;
+    public void setPropertyIdForMaintenance(UUID propertyIdForMaintenance) {
+        this.propertyIdForMaintenance = propertyIdForMaintenance;
     }
 
     public LocalDate getOpeningDate() {

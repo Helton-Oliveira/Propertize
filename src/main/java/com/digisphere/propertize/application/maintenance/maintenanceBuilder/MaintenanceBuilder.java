@@ -29,7 +29,7 @@ public class MaintenanceBuilder implements IMaintenanceBuilder{
 
     @Override
     public void setPropertyId(UUID propertyId) {
-        this.maintenanceProtocol.setPropertyId(propertyId);
+        this.maintenanceProtocol.setPropertyIdForMaintenance(propertyId);
     }
 
     @Override
