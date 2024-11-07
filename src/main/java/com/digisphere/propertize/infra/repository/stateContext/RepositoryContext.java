@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class RepositoryContext implements IRepositoryContext {
     private StateRepository stateRepository;
-    private IConnection connection = new PostgreSqlAdapter();
+    private final IConnection connection = new PostgreSqlAdapter();
 
     public void changeState(String state) {
         if (state.equalsIgnoreCase("users")) this.stateRepository = new UserRepository(connection, new UserBuilder());
