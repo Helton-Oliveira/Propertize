@@ -1,11 +1,12 @@
 package com.digisphere.propertize.application.property.useCase;
 
 import com.digisphere.propertize.application.property.domain.Property;
+import com.digisphere.propertize.application.property.useCase.interfaces.IGetAllProperties;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
 import java.util.List;
 
-public class GetAllProperties implements IGetAllProperties{
+public class GetAllProperties implements IGetAllProperties {
 
     private final IRepositoryContext repositoryContext;
 

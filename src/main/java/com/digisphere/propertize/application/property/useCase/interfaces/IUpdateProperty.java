@@ -1,4 +1,4 @@
-package com.digisphere.propertize.application.property.useCase;
+package com.digisphere.propertize.application.property.useCase.interfaces;
 
 import java.util.Map;
 

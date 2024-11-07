@@ -2,6 +2,7 @@ package com.digisphere.propertize.application.property.useCase;
 
 import com.digisphere.propertize.application.director.Director;
 import com.digisphere.propertize.application.property.domain.Property;
+import com.digisphere.propertize.application.property.useCase.interfaces.ICreateProperty;
 import com.digisphere.propertize.application.user.domain.User;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
