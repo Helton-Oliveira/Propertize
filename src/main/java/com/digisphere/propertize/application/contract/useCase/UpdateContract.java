@@ -1,10 +1,11 @@
 package com.digisphere.propertize.application.contract.useCase;
 
+import com.digisphere.propertize.application.contract.useCase.interfaces.IUpdateContract;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
 import java.util.Map;
 
-public class UpdateContract implements  IUpdateContract{
+public class UpdateContract implements IUpdateContract {
     private final IRepositoryContext repositoryContext;
 
     public UpdateContract(IRepositoryContext repositoryContext) {

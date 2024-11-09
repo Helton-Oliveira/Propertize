@@ -1,6 +1,10 @@
 package com.digisphere.propertize.infra.config;
 
 import com.digisphere.propertize.application.contract.useCase.*;
+import com.digisphere.propertize.application.contract.useCase.interfaces.ICreateContract;
+import com.digisphere.propertize.application.contract.useCase.interfaces.IGetAllContracts;
+import com.digisphere.propertize.application.contract.useCase.interfaces.IGetOneContract;
+import com.digisphere.propertize.application.contract.useCase.interfaces.IUpdateContract;
 import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
 import com.digisphere.propertize.application.director.bridgePattern.implementations.AbstractDirector;
 import com.digisphere.propertize.application.maintenance.useCase.GetOneMaintenanceProtocol;

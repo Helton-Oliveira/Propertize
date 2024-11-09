@@ -1,4 +1,4 @@
-package com.digisphere.propertize.application.contract.useCase;
+package com.digisphere.propertize.application.contract.useCase.interfaces;
 
 import com.digisphere.propertize.application.contract.domain.Contract;
 

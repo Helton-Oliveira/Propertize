@@ -1,9 +1,10 @@
 package com.digisphere.propertize.application.contract.useCase;
 
 import com.digisphere.propertize.application.contract.domain.Contract;
+import com.digisphere.propertize.application.contract.useCase.interfaces.IGetOneContract;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
-public class GetOneContract implements IGetOneContract{
+public class GetOneContract implements IGetOneContract {
 
     private final IRepositoryContext repositoryContext;
 

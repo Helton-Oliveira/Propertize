@@ -1,11 +1,12 @@
 package com.digisphere.propertize.application.contract.useCase;
 
 import com.digisphere.propertize.application.contract.domain.Contract;
+import com.digisphere.propertize.application.contract.useCase.interfaces.IGetAllContracts;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
 import java.util.List;
 
-public class GetAllContracts implements IGetAllContracts{
+public class GetAllContracts implements IGetAllContracts {
 
     private final IRepositoryContext repositoryContext;
 

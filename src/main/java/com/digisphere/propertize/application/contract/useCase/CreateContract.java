@@ -1,6 +1,7 @@
 package com.digisphere.propertize.application.contract.useCase;
 
 import com.digisphere.propertize.application.contract.domain.Contract;
+import com.digisphere.propertize.application.contract.useCase.interfaces.ICreateContract;
 import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.user.domain.User;
