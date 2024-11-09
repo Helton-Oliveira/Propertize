@@ -1,9 +1,9 @@
 package com.digisphere.propertize.application.user.useCase;
 
+import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
 import com.digisphere.propertize.application.observerPattern.subject.IEventManager;
 import com.digisphere.propertize.application.user.domain.User;
 import com.digisphere.propertize.application.user.useCase.interfaces.ICreateUser;
-import com.digisphere.propertize.application.user.useCase.strategyPattern.context.IContext;
 import com.digisphere.propertize.application.user.utils.PasswordEncryptUtil;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
@@ -13,19 +13,19 @@ import java.util.Map;
 public class CreateUser implements ICreateUser {
 
     private final IRepositoryContext repositoryContext;
-    private final IContext context;
     private final IEventManager eventManager;
+    private final IAbstractDirector abstractDirector;
 
-    public CreateUser(IRepositoryContext stateContext, IContext context, IEventManager eventManager) {
+    public CreateUser(IRepositoryContext stateContext, IEventManager eventManager, IAbstractDirector abstractDirector) {
         this.repositoryContext = stateContext;
-        this.context = context;
         this.eventManager = eventManager;
+        this.abstractDirector = abstractDirector;
     }
 
     @Override
     public User execute(Map<String, String> attributes) {
-        context.setStrategy(attributes);
-        var user = context.executeStrategy(attributes);
+
+        User user = abstractDirector.build(attributes);
 
         Map<String, String> dataForNotify = new HashMap<>();
         dataForNotify.put("email", user.getEmail());

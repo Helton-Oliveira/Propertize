@@ -1,5 +1,7 @@
 package com.digisphere.propertize;
 
+import com.digisphere.propertize.application.director.bridgePattern.implementations.AbstractDirector;
+import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.property.useCase.CreateProperty;
 import com.digisphere.propertize.application.property.useCase.GetAllProperties;
@@ -10,7 +12,6 @@ import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,30 +23,30 @@ public class PropertyTest {
     @Test
     @DisplayName("deve criar uma propriedade")
     void createProperty() {
-        Map<String, String> address = new HashMap<>();
+        Map<String, String> data = new HashMap<>();
         IRepositoryContext repositoryContext = new RepositoryContext();
+        IAbstractDirector abstractDirector = new AbstractDirector();
 
+        data.put("ownerId", "faabf272-3958-43c6-be71-f440c6342187");
+        data.put("description", "A beautiful family home with a large garden and modern amenities.");
+        data.put("street", "Main Street");
+        data.put("number", "143");
+        data.put("complement", "not");
+        data.put("neighborhood", "Downtown");
+        data.put("city", "Springfield");
+        data.put("state", "Illinois");
+        data.put("postalCode", "34701");
+        data.put("type", "residencial");
+        data.put("size", "180.0");
+        data.put("bedRoomCount", "4");
+        data.put("bathRoomCount", "3");
+        data.put("hasGarage", "true");
+        data.put("rentValue", "4500.00");
+        data.put("status", "disponivel");
+        data.put("constructionDate", "2010-08-16");
 
-        address.put("street", "Main Street");
-        address.put("number", "143");
-        address.put("complement", "not");
-        address.put("neighborhood", "Downtown");
-        address.put("city", "Springfield");
-        address.put("state", "Illinois");
-        address.put("postalCode", "34701");
-
-        var creator = new CreateProperty(repositoryContext);
-        var property = creator.execute("7193ef6b-bffc-444d-a25e-d7966a5b6b69",
-                "A beautiful family home with a large garden and modern amenities.",
-                address,
-                "residencial",
-                180.0,
-                4,
-                3,
-                true,
-                4.500,
-                "disponivel",
-                LocalDate.of(2010, 8, 16));
+        var creator = new CreateProperty(repositoryContext, abstractDirector);
+        var property = creator.execute(data);
 
         assertThat(property.getId()).isNotNull();
     }

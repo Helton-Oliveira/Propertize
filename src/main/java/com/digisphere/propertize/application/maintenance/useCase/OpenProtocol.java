@@ -1,6 +1,6 @@
 package com.digisphere.propertize.application.maintenance.useCase;
 
-import com.digisphere.propertize.application.director.Director;
+import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
 import com.digisphere.propertize.application.maintenance.domain.MaintenanceProtocol;
 import com.digisphere.propertize.application.maintenance.useCase.interaces.IOpenProtocol;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
@@ -10,16 +10,16 @@ import java.util.Map;
 
 public class OpenProtocol implements IOpenProtocol {
     private final IRepositoryContext repositoryContext;
+    private final IAbstractDirector abstractDirector;
 
-    public OpenProtocol(IRepositoryContext repositoryContext) {
+    public OpenProtocol(IRepositoryContext repositoryContext, IAbstractDirector abstractDirector) {
         this.repositoryContext = repositoryContext;
+        this.abstractDirector = abstractDirector;
     }
 
     @Override
     public MaintenanceProtocol execute(Map<String, String> data) {
-        var creator = Director.createMaintenanceProtocolDirector();
-        creator.createMaintenanceProtocol(data);
-        var protocol = creator.buildMaintenanceProtocol();
+        MaintenanceProtocol protocol = abstractDirector.build(data);
 
         repositoryContext.changeState("maintenanceProtocols");
         Map<String, Object> protocolData = new HashMap<>();

@@ -1,5 +1,6 @@
 package com.digisphere.propertize.application.user.useCase.strategyPattern.context;
 
+import com.digisphere.propertize.application.user.builderPattern.builder.IUserBuilder;
 import com.digisphere.propertize.application.user.domain.User;
 import com.digisphere.propertize.application.user.useCase.strategyPattern.strategy.CreateOwner;
 import com.digisphere.propertize.application.user.useCase.strategyPattern.strategy.IStrategy;
@@ -20,7 +21,7 @@ public class Context implements IContext{
     }
 
     @Override
-    public User executeStrategy(Map<String, String> data) {
-        return strategy.execute(data);
+    public User executeStrategy(Map<String, String> data, IUserBuilder userBuilder) {
+        return strategy.execute(data, userBuilder);
     }
 }

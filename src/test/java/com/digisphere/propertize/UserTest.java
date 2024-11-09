@@ -1,10 +1,10 @@
 package com.digisphere.propertize;
 
+import com.digisphere.propertize.application.director.bridgePattern.implementations.AbstractDirector;
+import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
 import com.digisphere.propertize.application.observerPattern.subject.EventManager;
 import com.digisphere.propertize.application.observerPattern.subject.IEventManager;
 import com.digisphere.propertize.application.user.useCase.*;
-import com.digisphere.propertize.application.user.useCase.strategyPattern.context.Context;
-import com.digisphere.propertize.application.user.useCase.strategyPattern.context.IContext;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ public class UserTest {
     void createAdmin() {
 
         Map<String, String> input = new HashMap<>();
-        IContext context = new Context();
+        IAbstractDirector abstractDirector = new AbstractDirector();
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
 
@@ -30,7 +30,7 @@ public class UserTest {
         input.put("cpf", "1234567890");
         input.put("phone", "19 99845577");
 
-        var admin = new CreateUser(stateContext, context, eventManager);
+        var admin = new CreateUser(stateContext, eventManager, abstractDirector);
         var result = admin.execute(input);
 
         assertThat(result.getRole().toString()).isEqualTo("ADMIN");
@@ -41,7 +41,7 @@ public class UserTest {
     @DisplayName("Deve criar um usuario inquilino")
     void createTenant() {
         Map<String, String> input = new HashMap<>();
-        IContext context = new Context();
+        IAbstractDirector abstractDirector = new AbstractDirector();
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
 
@@ -51,7 +51,7 @@ public class UserTest {
         input.put("email", "heltonhenriqueoliveira321@gmail.com");
         input.put("role", "tenant");
 
-        var tenant = new CreateUser(stateContext, context, eventManager);
+        var tenant = new CreateUser(stateContext, eventManager, abstractDirector);
         var result = tenant.execute(input);
 
         assertThat(result.getRole().toString()).isEqualTo("TENANT");
@@ -61,7 +61,7 @@ public class UserTest {
     @DisplayName("Deve criar um usuario proprietario de uma residencia")
     void createOwner() {
         Map<String, String> input = new HashMap<>();
-        IContext context = new Context();
+        IAbstractDirector abstractDirector = new AbstractDirector();
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
         input.put("name", "Karla Maynny");
@@ -70,7 +70,7 @@ public class UserTest {
         input.put("email", "karlamaynny2017@gmail.com");
         input.put("role", "owner");
 
-        var tenant = new CreateUser(stateContext, context, eventManager);
+        var tenant = new CreateUser(stateContext, eventManager, abstractDirector);
         var result = tenant.execute(input);
 
         assertThat(result.getRole().toString()).isEqualTo("OWNER");

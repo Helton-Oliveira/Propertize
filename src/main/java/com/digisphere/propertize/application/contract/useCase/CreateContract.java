@@ -1,7 +1,7 @@
 package com.digisphere.propertize.application.contract.useCase;
 
 import com.digisphere.propertize.application.contract.domain.Contract;
-import com.digisphere.propertize.application.director.Director;
+import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.user.domain.User;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
@@ -13,9 +13,11 @@ import java.util.Map;
 public class CreateContract implements ICreateContract {
 
     private final IRepositoryContext repositoryContext;
+    private final IAbstractDirector abstractDirector;
 
-    public CreateContract(IRepositoryContext repositoryContext) {
+    public CreateContract(IRepositoryContext repositoryContext, IAbstractDirector abstractDirector) {
         this.repositoryContext = repositoryContext;
+        this.abstractDirector = abstractDirector;
     }
 
     @Override
@@ -37,10 +39,7 @@ public class CreateContract implements ICreateContract {
         data.put("monthlyRent", property.getRentValue().toString());
         data.put("address", property.getAddress().toString());
 
-        var director = Director.createContractDirector();
-        director.createContract(data);
-
-        var contract = director.buildContract();
+        Contract contract = abstractDirector.build(data);
         Map<String, Object> contractMap = new HashMap<>();
         contractMap.put("contract", contract);
 

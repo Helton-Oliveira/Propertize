@@ -1,5 +1,7 @@
 package com.digisphere.propertize;
 
+import com.digisphere.propertize.application.director.bridgePattern.implementations.AbstractDirector;
+import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
 import com.digisphere.propertize.application.maintenance.domain.MaintenanceProtocol;
 import com.digisphere.propertize.application.maintenance.domain.component.MaintenanceStatus;
 import com.digisphere.propertize.application.maintenance.useCase.GetOneMaintenanceProtocol;
@@ -23,13 +25,14 @@ public class MaintenanceProtocolTest {
     @DisplayName("deve abrir um chamado para manutencao de propriedade")
     void openTicket() {
         IRepositoryContext repositoryContext = new RepositoryContext();
+        IAbstractDirector abstractDirector = new AbstractDirector();
         Map<String, String> input = new HashMap<>();
 
         input.put("propertyId", "b80801b3-d748-4387-8bf5-65b88605c11c");
         input.put("tenantId", "e921f072-624e-4eac-ac87-8ae532bcf7d8");
         input.put("MaintenanceDetails", "Infiltracao da chuva");
 
-        var openProtocol = new OpenProtocol(repositoryContext);
+        var openProtocol = new OpenProtocol(repositoryContext, abstractDirector);
         MaintenanceProtocol protocol = openProtocol.execute(input);
 
         assertThat(protocol.getStatus().name()).isEqualTo("OPEN");
