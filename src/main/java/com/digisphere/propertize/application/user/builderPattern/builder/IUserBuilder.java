@@ -8,7 +8,6 @@ import java.util.UUID;
 public interface IUserBuilder {
     User getUser();
     void reset();
-    void setId(UUID id);
     void setName(String name);
     void setEmail(String email);
     void setPassword(String password);

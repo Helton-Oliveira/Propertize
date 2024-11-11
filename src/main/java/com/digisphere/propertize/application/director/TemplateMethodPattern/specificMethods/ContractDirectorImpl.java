@@ -27,7 +27,7 @@ public class ContractDirectorImpl implements IDirector {
 
         contractBuilder.setId(UUID.randomUUID());
         contractBuilder.setPropertyId(UUID.fromString(data.get("propertyId")));
-        contractBuilder.setTenantId(UUID.fromString(data.get("tenantId")));
+        contractBuilder.setTenantCpf(data.get("tenantCpf"));
         contractBuilder.setStartDate(startDate);
         contractBuilder.setEndDate(CalculateContractPeriod.calculate(startDate, period));
         contractBuilder.setMaintenanceClause(GenerateMaintenanceClause.generate());

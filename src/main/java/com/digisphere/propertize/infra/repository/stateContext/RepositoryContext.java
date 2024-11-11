@@ -28,13 +28,13 @@ public class RepositoryContext implements IRepositoryContext {
     }
 
     @Override
-    public <T> T getOne(String id) {
-       return stateRepository.getOne(id);
+    public <T> T getOne(String pk) {
+       return stateRepository.getOne(pk);
     }
 
     @Override
-    public String update(String id, Map<String, String> data) {
-        return stateRepository.update(id, data);
+    public String update(String pk, Map<String, String> data) {
+        return stateRepository.update(pk, data);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class RepositoryContext implements IRepositoryContext {
     }
 
     @Override
-    public String delete(String id) {
-        return stateRepository.delete(id);
+    public String delete(String pk) {
+        return stateRepository.delete(pk);
     }
 
 

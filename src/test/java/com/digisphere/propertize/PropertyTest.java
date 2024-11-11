@@ -27,7 +27,7 @@ public class PropertyTest {
         IRepositoryContext repositoryContext = new RepositoryContext();
         ITemplateMethod abstractDirector = new TemplateMethodDirector();
 
-        data.put("ownerId", "faabf272-3958-43c6-be71-f440c6342187");
+        data.put("ownerCpf", "71686187092");
         data.put("description", "A beautiful family home with a large garden and modern amenities.");
         data.put("street", "Main Street");
         data.put("number", "143");
@@ -57,9 +57,9 @@ public class PropertyTest {
         IRepositoryContext repositoryContext = new RepositoryContext();
 
         var get = new GetOneProperty(repositoryContext);
-        var property = get.execute("b80801b3-d748-4387-8bf5-65b88605c11c");
+        var property = get.execute("647460b5-fb18-4329-9343-9b539b789779");
 
-        assertThat(property.getId().toString()).isEqualTo("b80801b3-d748-4387-8bf5-65b88605c11c");
+        assertThat(property.getId().toString()).isEqualTo("647460b5-fb18-4329-9343-9b539b789779");
     }
 
     @Test
@@ -84,7 +84,7 @@ public class PropertyTest {
         data.put("rentValue", "3000");
 
         var updated = new UpdateProperty(repositoryContext);
-        String newProperty = updated.execute("2788e2c9-233a-4f8c-ad42-6bb4c0b22546", data);
+        String newProperty = updated.execute("647460b5-fb18-4329-9343-9b539b789779", data);
 
        assertThat(newProperty).isEqualTo("ITEM RENT_VALUE DA PROPRIEDADE ATUALIZAD(A) COM SUCESSO.");
     }

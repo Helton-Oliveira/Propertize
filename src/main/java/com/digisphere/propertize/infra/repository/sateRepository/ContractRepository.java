@@ -27,7 +27,7 @@ public class ContractRepository extends StateRepository{
     @Override
     public boolean save(Map<String, Object> data) {
         try {
-            var st = connection.query("INSERT INTO contracts (id, property_id, tenant_id, start_date, end_date, monthly_rent, payment_due_day, security_deposit, contract_status, termination_fee, maintenance_clause,contract_terms) " +
+            var st = connection.query("INSERT INTO contracts (id, property_id, tenant_cpf, start_date, end_date, monthly_rent, payment_due_day, security_deposit, contract_status, termination_fee, maintenance_clause,contract_terms) " +
                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
             buildInsertion(st, data);
             var result = st.executeUpdate();
@@ -40,10 +40,10 @@ public class ContractRepository extends StateRepository{
     }
 
     @Override
-    public <T> T getOne(String id) {
+    public <T> T getOne(String pk) {
         try {
            var st = connection.query("SELECT * FROM contracts WHERE id = ?");
-            st.setObject(1, UUID.fromString(id));
+            st.setObject(1, UUID.fromString(pk));
             var result = st.executeQuery();
             if(!result.next()) throw new RuntimeException("NOT FOUND");
             rebuild(result);
@@ -74,19 +74,19 @@ public class ContractRepository extends StateRepository{
     }
 
     @Override
-    public String delete(String id) {
+    public String delete(String pk) {
         return null;
     }
 
     @Override
-    public String update(String id, Map<String, String> updateData) {
+    public String update(String pk, Map<String, String> updateData) {
         String column = "";
         if(updateData.containsKey("status")) column = "contract_status = ?";
         if(updateData.containsKey("terminationDate") || updateData.containsKey("terminationReason")) column = "termination_date = ?, termination_reason = ?";
 
         try {
-            var st = connection.query("UPDATE contracts SET " + column + " WHERE id = ?");
-            changeUpdate(updateData, st, id);
+            var st = connection.query("UPDATE contracts SET " + column + " WHERE pk = ?");
+            changeUpdate(updateData, st, pk);
             var result = st.executeUpdate();
 
             if(result == 0) throw new RuntimeException("ERRO! CONTRATO NAO ATUALIZADO");
@@ -118,7 +118,7 @@ public class ContractRepository extends StateRepository{
 
         st.setObject(1, contract.getId());
         st.setObject(2, contract.getPropertyId());
-        st.setObject(3, contract.getTenantId());
+        st.setString(3, contract.getTenantCpf());
         st.setDate(4, Date.valueOf(contract.getStartDate()));
         st.setDate(5, Date.valueOf(contract.getEndDate()));
         st.setDouble(6, contract.getMonthlyRent());
@@ -133,7 +133,7 @@ public class ContractRepository extends StateRepository{
     private void rebuild(ResultSet result) throws SQLException {
         contractBuilder.setId(result.getObject("id", UUID.class));
         contractBuilder.setPropertyId(result.getObject("property_id", UUID.class));
-        contractBuilder.setTenantId(result.getObject("tenant_id", UUID.class));
+        contractBuilder.setTenantCpf(result.getString("tenant_cpf"));
         contractBuilder.setStartDate(result.getDate("start_date").toLocalDate());
         contractBuilder.setEndDate(result.getDate("end_date").toLocalDate());
         contractBuilder.setMonthlyRent(result.getDouble("monthly_rent"));

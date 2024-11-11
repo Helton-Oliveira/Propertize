@@ -11,7 +11,6 @@ import java.util.UUID;
 public class CreateTenant implements IStrategy{
     @Override
     public User execute(Map<String, String> data, IUserBuilder userBuilder) {
-        userBuilder.setId(UUID.randomUUID());
         userBuilder.setName(data.get("name"));
         userBuilder.setEmail(data.get("email"));
         userBuilder.setCpf(data.get("cpf"));

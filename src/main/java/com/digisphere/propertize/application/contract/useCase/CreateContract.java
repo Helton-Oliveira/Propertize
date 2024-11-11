@@ -30,12 +30,12 @@ public class CreateContract implements ICreateContract {
         repositoryContext.update(property.getId().toString(), updatePropertyStatus);
 
         repositoryContext.changeState("users");
-        User user = repositoryContext.getOne(data.get("tenantId"));
+        User user = repositoryContext.getOne(data.get("tenantCpf"));
 
         if(!user.getRole().toString().equalsIgnoreCase("tenant")) throw new RuntimeException("ERRO SÓ É POSSÍVEL VINCULAR INQUILINOS AOS CONTRATOS");
 
         data.put("propertyId", property.getId().toString());
-        data.put("ownerId", user.getId().toString());
+        data.put("tenantCpf", user.getCpf());
         data.put("startDate", LocalDate.now().toString());
         data.put("monthlyRent", property.getRentValue().toString());
         data.put("address", property.getAddress().toString());

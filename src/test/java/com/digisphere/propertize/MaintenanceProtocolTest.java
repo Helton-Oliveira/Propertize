@@ -28,9 +28,9 @@ public class MaintenanceProtocolTest {
         ITemplateMethod abstractDirector = new TemplateMethodDirector();
         Map<String, String> input = new HashMap<>();
 
-        input.put("propertyId", "b80801b3-d748-4387-8bf5-65b88605c11c");
-        input.put("tenantId", "e921f072-624e-4eac-ac87-8ae532bcf7d8");
-        input.put("MaintenanceDetails", "Infiltracao da chuva");
+        input.put("propertyId", "647460b5-fb18-4329-9343-9b539b789779");
+        input.put("tenantCpf", "07416672074");
+        input.put("MaintenanceDetails", "Fiacao velha");
 
         var openProtocol = new OpenProtocol(repositoryContext, abstractDirector);
         MaintenanceProtocol protocol = openProtocol.execute(input);
@@ -44,13 +44,13 @@ public class MaintenanceProtocolTest {
         IRepositoryContext repositoryContext = new RepositoryContext();
 
         var get = new GetOneMaintenanceProtocol(repositoryContext);
-        var protocol = get.execute("c8d51e7c-fc18-4291-bf21-f8b2d78e8e63");
+        var protocol = get.execute("ebdd733e-a622-4357-b5ce-c6d24bed2ffc");
 
-        assertThat(protocol.getProtocol().toString()).isEqualTo("c8d51e7c-fc18-4291-bf21-f8b2d78e8e63");
+        assertThat(protocol.getProtocol().toString()).isEqualTo("ebdd733e-a622-4357-b5ce-c6d24bed2ffc");
     }
 
     @Test
-    @DisplayName("deve buscar um todos os protocolos de manutencao com chamados em aberto")
+    @DisplayName("deve buscar todos os protocolos de manutencao com chamados em aberto")
     void getAllTickets() {
         IRepositoryContext repositoryContext = new RepositoryContext();
 
@@ -73,9 +73,9 @@ public class MaintenanceProtocolTest {
         data.put("reason", "foi verificado e não consta vazamento no encanamento, era apenas uma telha solta");
 
         var updatedStatus = new UpdateMaintenanceStatus(repositoryContext);
-        var column = updatedStatus.execute("c8d51e7c-fc18-4291-bf21-f8b2d78e8e63", data);
+        var column = updatedStatus.execute("ebdd733e-a622-4357-b5ce-c6d24bed2ffc", data);
 
-        assertThat(column).isEqualTo("STATUS DO PROTOCOLO c8d51e7c-fc18-4291-bf21-f8b2d78e8e63 ATUALIZADO PARA CANCELADO");
+        assertThat(column).isEqualTo("STATUS DO PROTOCOLO ebdd733e-a622-4357-b5ce-c6d24bed2ffc ATUALIZADO PARA CANCELADO");
     }
 
     @Test
@@ -87,8 +87,8 @@ public class MaintenanceProtocolTest {
         data.put("status", "em progresso");
 
         var updatedStatus = new UpdateMaintenanceStatus(repositoryContext);
-        var column = updatedStatus.execute("0da76e41-44e2-49d0-87a5-5abf51e0c000", data);
+        var column = updatedStatus.execute("308c0f04-59d8-423b-bba9-c98dddde6e2f", data);
 
-        assertThat(column).isEqualTo("STATUS DO PROTOCOLO 0da76e41-44e2-49d0-87a5-5abf51e0c000 ATUALIZADO PARA EM PROGRESSO");
+        assertThat(column).isEqualTo("STATUS DO PROTOCOLO 308c0f04-59d8-423b-bba9-c98dddde6e2f ATUALIZADO PARA EM PROGRESSO");
     }
 }

@@ -13,7 +13,6 @@ public class CreateAdmin implements IStrategy {
 
     @Override
     public User execute(Map<String, String> data, IUserBuilder userBuilder) {
-        userBuilder.setId(UUID.randomUUID());
         userBuilder.setName(data.get("name"));
         userBuilder.setEmail(CorporateEmailCreator.create(data.get("name")));
         userBuilder.setCpf(data.get("cpf"));

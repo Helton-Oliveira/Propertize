@@ -11,7 +11,7 @@ public interface IContractBuilder {
     void reset();
     void setId(UUID id);
     void setPropertyId(UUID propertyId);
-    void setTenantId(UUID tenantId);
+    void setTenantCpf(String tenantCpf);
     void setStartDate(LocalDate startDate);
     void setEndDate(LocalDate endDate);
     void setMonthlyRent(Double monthlyRent);

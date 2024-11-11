@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class Property {
     private UUID id;
-    private UUID ownerId;
+    private String ownerCpf;
     private String description;
     private Address address;
     private PropertyType type;
@@ -30,12 +30,12 @@ public class Property {
         this.maintenancePending = maintenancePending;
     }
 
-    public UUID getOwnerId() {
-        return ownerId;
+    public String getOwnerCpf() {
+        return ownerCpf;
     }
 
-    public void setOwnerId(UUID ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerCpf(String ownerCpf) {
+        this.ownerCpf = ownerCpf;
     }
 
     public UUID getId() {

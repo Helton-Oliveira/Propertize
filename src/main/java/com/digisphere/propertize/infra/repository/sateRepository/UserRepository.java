@@ -26,7 +26,7 @@ public class UserRepository extends StateRepository {
     @Override
    public boolean save(Map<String, Object> data) {
         try {
-            var st = connection.query("INSERT INTO users (id, name, email, cpf, password, phone, active, role) VALUES (?,?,?,?,?,?,?,?)");
+            var st = connection.query("INSERT INTO users (cpf, name, email, password, phone, active, role) VALUES (?,?,?,?,?,?,?)");
             buildInsertion(st, data);
             var result = st.executeUpdate();
             if (result != 0) {
@@ -40,10 +40,11 @@ public class UserRepository extends StateRepository {
     }
 
     @Override
-    public <T> T getOne(String id) {
+    public <T> T getOne(String pk) {
+        System.out.println(pk);
         try {
-            var st = connection.query("SELECT * FROM users WHERE id = ?");
-            st.setObject(1, UUID.fromString(id));
+            var st = connection.query("SELECT * FROM users WHERE cpf = ?");
+            st.setObject(1, pk);
             var result = st.executeQuery();
 
             if (!result.next()) {
@@ -76,15 +77,15 @@ public class UserRepository extends StateRepository {
     }
 
     @Override
-    public String update(String id, Map<String, String> updateData) {
+    public String update(String pk, Map<String, String> updateData) {
         String colmun = "";
         if (updateData.containsKey("password")) colmun = "password";
         if (updateData.containsKey("phone")) colmun = "phone";
 
         try {
-            var st = connection.query("UPDATE users SET " + colmun + " = ? WHERE id = ?");
+            var st = connection.query("UPDATE users SET " + colmun + " = ? WHERE cpf = ?");
             st.setString(1, updateData.get(colmun));
-            st.setObject(2, UUID.fromString(id));
+            st.setString(2, pk);
             var result = st.executeUpdate();
             if (result == 0) return null;
 
@@ -92,42 +93,41 @@ public class UserRepository extends StateRepository {
             System.out.println(e.getMessage());
         }
 
-        return colmun.toUpperCase() + " DO USUÁRIO COM ID: " + id + " ATUALIZADA COM SUCESSO!";
+        return colmun.toUpperCase() + " DO USUÁRIO COM CPF: " + pk + " ATUALIZADA COM SUCESSO!";
     }
 
     @Override
-    public String delete(String id) {
+    public String delete(String pk) {
         try {
-            var st = connection.query("UPDATE users SET active = ? WHERE id = ?");
+            var st = connection.query("UPDATE users SET active = ? WHERE cpf = ?");
             st.setBoolean(1, false);
-            st.setObject(2, UUID.fromString(id));
+            st.setString(2, pk);
             var result = st.executeUpdate();
 
             if(result == 0) {
-                return "ERRO! IMPOSSÍVEL DESATIVAR USUÁRIO COM ID: " + id;
+                return "ERRO! IMPOSSÍVEL DESATIVAR USUÁRIO COM CPF: " + pk;
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return "USUÁRIO COM ID: " + id + " DESAIVADO COM SUCESSO.";
+        return "USUÁRIO COM CPF: " + pk + " DESAIVADO COM SUCESSO.";
     }
 
     private void buildInsertion(PreparedStatement st, Map<String, Object> data) throws SQLException {
        var user = (User) data.get("user");
 
-       st.setObject(1,user.getId());
+       st.setString(1,user.getCpf());
        st.setString(2, user.getName());
        st.setString(3, user.getEmail());
-       st.setString(4, user.getCpf());
-       st.setString(5, user.getPassword());
-       st.setString(6, user.getPhone());
-       st.setBoolean(7, user.getActive());
-       st.setString(8, String.valueOf(user.getRole()));
+       st.setString(4, user.getPassword());
+       st.setString(5, user.getPhone());
+       st.setBoolean(6, user.getActive());
+       st.setString(7, String.valueOf(user.getRole()));
     }
 
     private void rebuild(ResultSet result) throws SQLException {
-        builder.setId((UUID) result.getObject("id"));
+        System.out.println("rebuild");
         builder.setName(result.getString("name"));
         builder.setEmail(result.getString("email"));
         builder.setCpf(result.getString("cpf"));

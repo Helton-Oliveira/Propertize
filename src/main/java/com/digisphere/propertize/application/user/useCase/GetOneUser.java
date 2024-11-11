@@ -15,7 +15,6 @@ public class GetOneUser implements IGetOneUSer {
     @Override
     public User execute(String id) {
         repositoryContext.changeState("users");
-        var user = repositoryContext.getOne(id);
-        return (User) user;
+        return repositoryContext.getOne(id);
     }
 }

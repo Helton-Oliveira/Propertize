@@ -33,8 +33,8 @@ public class ContractBuilder implements IContractBuilder {
     }
 
     @Override
-    public void setTenantId(UUID tenantId) {
-        this.contract.setTenantId(tenantId);
+    public void setTenantCpf(String tenantCpf) {
+        this.contract.setTenantCpf(tenantCpf);
     }
 
     @Override

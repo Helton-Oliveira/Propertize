@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class MaintenanceProtocol {
     private UUID protocol;
-    private UUID requestingTenantId;
+    private String requestingTenantCpf;
     private UUID propertyIdForMaintenance;
     private LocalDate openingDate;
     private LocalDate dateOfResolution;
@@ -31,12 +31,12 @@ public class MaintenanceProtocol {
         this.protocol = protocol;
     }
 
-    public UUID getRequestingTenantId() {
-        return requestingTenantId;
+    public String getRequestingTenantCpf() {
+        return requestingTenantCpf;
     }
 
-    public void setRequestingTenantId(UUID requestingTenantId) {
-        this.requestingTenantId = requestingTenantId;
+    public void setRequestingTenantCpf(String requestingTenantCpf) {
+        this.requestingTenantCpf = requestingTenantCpf;
     }
 
     public UUID getPropertyIdForMaintenance() {

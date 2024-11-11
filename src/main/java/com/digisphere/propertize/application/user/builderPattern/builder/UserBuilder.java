@@ -22,11 +22,6 @@ public class UserBuilder implements IUserBuilder {
     }
 
     @Override
-    public void setId(UUID id) {
-        this.user.setId(id);
-    }
-
-    @Override
     public void setName(String name) {
         this.user.setName(name);
     }

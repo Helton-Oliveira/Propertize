@@ -12,7 +12,7 @@ public interface IPropertyBuilder {
     Property getProperty();
     void reset();
     void setId(UUID id);
-    void setOwnerId(UUID id);
+    void setOwnerCpf(String ownerCpf);
     void setDescription(String description);
     void setAddress(Address address);
     void setType(PropertyType type);

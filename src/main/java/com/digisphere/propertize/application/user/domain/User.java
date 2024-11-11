@@ -1,9 +1,6 @@
 package com.digisphere.propertize.application.user.domain;
 
-import java.util.UUID;
-
 public class User {
-    private UUID id;
     private String name;
     private String email;
     private String password;
@@ -18,14 +15,6 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getName() {

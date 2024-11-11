@@ -18,7 +18,7 @@ public class PropertyDirectorImpl implements IDirector {
     @Override
     public void buildEntity(Map<String, String> data) {
         propertyBuilder.setId(UUID.randomUUID());
-        propertyBuilder.setOwnerId(UUID.fromString(data.get("ownerId")));
+        propertyBuilder.setOwnerCpf(data.get("ownerCpf"));
         propertyBuilder.setDescription(data.get("description"));
         propertyBuilder.setAddress(new Address(data));
         propertyBuilder.setType(PropertyType.fromString(data.get("type")));

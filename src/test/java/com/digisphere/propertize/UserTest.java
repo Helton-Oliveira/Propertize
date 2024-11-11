@@ -4,6 +4,7 @@ import com.digisphere.propertize.application.director.TemplateMethodPattern.Temp
 import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
 import com.digisphere.propertize.application.observerPattern.subject.EventManager;
 import com.digisphere.propertize.application.observerPattern.subject.IEventManager;
+import com.digisphere.propertize.application.user.domain.User;
 import com.digisphere.propertize.application.user.useCase.*;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
@@ -27,7 +28,7 @@ public class UserTest {
         IEventManager eventManager = new EventManager();
 
         input.put("name", "Richard Robson");
-        input.put("cpf", "1234567890");
+        input.put("cpf", "58158076050");
         input.put("phone", "19 99845577");
 
         var admin = new CreateUser(stateContext, eventManager, abstractDirector);
@@ -46,7 +47,7 @@ public class UserTest {
         IEventManager eventManager = new EventManager();
 
         input.put("name", "Helton Oliveira");
-        input.put("cpf", "1234567890");
+        input.put("cpf", "07416672074");
         input.put("phone", "19 99845577");
         input.put("email", "heltonhenriqueoliveira321@gmail.com");
         input.put("role", "tenant");
@@ -65,7 +66,7 @@ public class UserTest {
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
         input.put("name", "Karla Maynny");
-        input.put("cpf", "1234567890");
+        input.put("cpf", "71686187092");
         input.put("phone", "19 99845577");
         input.put("email", "karlamaynny2017@gmail.com");
         input.put("role", "owner");
@@ -82,7 +83,7 @@ public class UserTest {
         IRepositoryContext repositoryContext = new RepositoryContext();
 
         var get = new GetOneUser(repositoryContext);
-        var user = get.execute("42a1576f-4b10-467f-831c-b91b5798500b");
+        User user = get.execute("58158076050");
 
         assertThat(user.getRole().toString()).isEqualTo("ADMIN");
     }
@@ -108,9 +109,9 @@ public class UserTest {
         IRepositoryContext repositoryContext = new RepositoryContext();
 
         var updatedData = new UpdateUser(repositoryContext);
-        var response = updatedData.execute("7193ef6b-bffc-444d-a25e-d7966a5b6b69", data);
+        var response = updatedData.execute("58158076050", data);
 
-        assertThat(response).isEqualTo("PASSWORD DO USUÁRIO COM ID: 7193ef6b-bffc-444d-a25e-d7966a5b6b69 ATUALIZADA COM SUCESSO!");
+        assertThat(response).isEqualTo("PASSWORD DO USUÁRIO COM CPF: 58158076050 ATUALIZADA COM SUCESSO!");
     }
 
     @Test
@@ -121,9 +122,9 @@ public class UserTest {
         IRepositoryContext repositoryContext = new RepositoryContext();
 
         var updatedData = new UpdateUser(repositoryContext);
-        var response = updatedData.execute("7193ef6b-bffc-444d-a25e-d7966a5b6b69", data);
+        var response = updatedData.execute("58158076050", data);
 
-        assertThat(response).isEqualTo("PHONE DO USUÁRIO COM ID: 7193ef6b-bffc-444d-a25e-d7966a5b6b69 ATUALIZADA COM SUCESSO!");
+        assertThat(response).isEqualTo("PHONE DO USUÁRIO COM CPF: 58158076050 ATUALIZADA COM SUCESSO!");
     }
 
     @Test
@@ -131,8 +132,8 @@ public class UserTest {
     void deleteUser() {
         IRepositoryContext repositoryContext = new RepositoryContext();
         var disabledUser = new DisableUser(repositoryContext);
-        var response = disabledUser.execute("7193ef6b-bffc-444d-a25e-d7966a5b6b69");
+        var response = disabledUser.execute("58158076050");
 
-        assertThat(response).isEqualTo("USUÁRIO COM ID: 7193ef6b-bffc-444d-a25e-d7966a5b6b69 DESAIVADO COM SUCESSO.");
+        assertThat(response).isEqualTo("USUÁRIO COM CPF: 58158076050 DESAIVADO COM SUCESSO.");
     }
 }

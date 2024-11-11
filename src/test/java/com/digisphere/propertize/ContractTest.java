@@ -24,8 +24,8 @@ public class ContractTest {
     @DisplayName("Deve criar um contrato")
     void createContract() {
         Map<String, String> data = new HashMap<>();
-        data.put("propertyId", "b80801b3-d748-4387-8bf5-65b88605c11c");
-        data.put("tenantId", "06dd53ec-d492-455f-b632-b827794d3d85");
+        data.put("propertyId", "647460b5-fb18-4329-9343-9b539b789779");
+        data.put("tenantCpf", "07416672074");
         data.put("period", "2");
         data.put("monthlyRent", "2500.00");
         data.put("paymentDueDay", "5");
@@ -48,9 +48,9 @@ public class ContractTest {
         IRepositoryContext repositoryContext = new RepositoryContext();
 
         var get = new GetOneContract(repositoryContext);
-        Contract contract = get.execute("fd3f2a74-6c6f-458d-aa27-9772bb25e02e");
+        Contract contract = get.execute("77efa89a-a949-4e6d-9330-812a23ec3fe7");
 
-        assertThat(contract.getId().toString()).isEqualTo("fd3f2a74-6c6f-458d-aa27-9772bb25e02e");
+        assertThat(contract.getId().toString()).isEqualTo("77efa89a-a949-4e6d-9330-812a23ec3fe7");
 
     }
 

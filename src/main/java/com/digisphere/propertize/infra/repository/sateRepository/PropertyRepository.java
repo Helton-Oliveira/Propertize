@@ -29,7 +29,7 @@ public class PropertyRepository extends StateRepository {
     public boolean save(Map<String, Object> data) {
         try {
             var stmt = connection.query("INSERT INTO properties " +
-                    "(id, owner_id, property_type, size, bedroom_count, bathroom_count, has_garage, rent_value, status, construction_date, description, street, number, complement, neighborhood, city, state, postal_code, maintenance_pending) " +
+                    "(id, owner_cpf, property_type, size, bedroom_count, bathroom_count, has_garage, rent_value, status, construction_date, description, street, number, complement, neighborhood, city, state, postal_code, maintenance_pending) " +
                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             buildInsertion(stmt, data);
             var result = stmt.executeUpdate();
@@ -42,10 +42,10 @@ public class PropertyRepository extends StateRepository {
     }
 
     @Override
-    public <T> T getOne(String id) {
+    public <T> T getOne(String pk) {
         try {
             var st = connection.query("SELECT * FROM properties WHERE id = ?");
-            st.setObject(1, UUID.fromString(id));
+            st.setObject(1, UUID.fromString(pk));
             var response = st.executeQuery();
 
             if (!response.next()) throw new RuntimeException("ERROR! NAO ENCONTRADO ");
@@ -77,7 +77,7 @@ public class PropertyRepository extends StateRepository {
     }
 
     @Override
-    public String update(String id, Map<String, String> updateData) {
+    public String update(String pk, Map<String, String> updateData) {
         String column = "";
         if(updateData.containsKey("maintenancePending")) column = "maintenance_pending";
         if(updateData.containsKey("status")) column = "status";
@@ -86,7 +86,7 @@ public class PropertyRepository extends StateRepository {
         try {
             var st = connection.query("UPDATE properties SET " + column + " = ? WHERE id = ?");
             changeUpdate(column, st, updateData);
-            st.setObject(2, UUID.fromString(id));
+            st.setObject(2, UUID.fromString(pk));
             var response = st.executeUpdate();
 
             if (response == 0) throw new RuntimeException("ERRO PROPRIEDADE NAO ATUALIZADA");
@@ -102,7 +102,7 @@ public class PropertyRepository extends StateRepository {
         var property = (Property) data.get("property");
 
         stmt.setObject(1, property.getId());
-        stmt.setObject(2, property.getOwnerId());
+        stmt.setObject(2, property.getOwnerCpf());
         stmt.setString(3, property.getType().toString());
         stmt.setDouble(4, property.getSize());
         stmt.setInt(5, property.getBedroomCount());
@@ -127,7 +127,7 @@ public class PropertyRepository extends StateRepository {
 
     private void rebuild(ResultSet response) throws SQLException {
         propertyBuilder.setId((UUID) response.getObject("id"));
-        propertyBuilder.setOwnerId((UUID) response.getObject("owner_id"));
+        propertyBuilder.setOwnerCpf(response.getString("owner_cpf"));
         propertyBuilder.setType(PropertyType.valueOf(response.getString("property_type")));
         propertyBuilder.setSize(response.getDouble("size"));
         propertyBuilder.setBedroomCount(response.getInt("bedroom_count"));

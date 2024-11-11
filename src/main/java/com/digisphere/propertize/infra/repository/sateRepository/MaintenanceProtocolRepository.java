@@ -28,7 +28,7 @@ public class MaintenanceProtocolRepository extends StateRepository{
     @Override
     public boolean save(Map<String, Object> data) {
         try {
-            var st = connection.query("INSERT INTO maintenance_protocols (protocol, property_id_for_maintenance, requesting_tenant_id, opening_date, maintenance_details, maintenance_status) VALUES (?,?,?,?,?,?)");
+            var st = connection.query("INSERT INTO maintenance_protocols (protocol, property_id_for_maintenance, requesting_tenant_cpf, opening_date, maintenance_details, maintenance_status) VALUES (?,?,?,?,?,?)");
             buildInsertion(st, data);
             var result = st.executeUpdate();
             if(result == 0) throw new RuntimeException("ERRO AO CADASTRAR PROTOCOLO");
@@ -40,10 +40,10 @@ public class MaintenanceProtocolRepository extends StateRepository{
     }
 
     @Override
-    public <T> T getOne(String id) {
+    public <T> T getOne(String pk) {
         try {
             var st = connection.query("SELECT * FROM maintenance_protocols WHERE protocol = ?");
-            st.setObject(1, UUID.fromString(id));
+            st.setObject(1, UUID.fromString(pk));
             var result = st.executeQuery();
             if (!result.next()) throw new RuntimeException("ID PROTOCOLO NÃO EXISTENTE");
             rebuild(result);
@@ -74,12 +74,12 @@ public class MaintenanceProtocolRepository extends StateRepository{
     }
 
     @Override
-    public String update(String id, Map<String, String> updateData) {
+    public String update(String pk, Map<String, String> updateData) {
         String column = " maintenance_status = ?, date_of_resolution = ? ";
         if (MaintenanceStatus.getStatus(updateData.get("status")).equals(MaintenanceStatus.CANCELED) && updateData.containsKey("reason")) column = " date_of_resolution = ?, maintenance_status = ?, reason_for_cancellation = ? ";
         try {
             var st = connection.query("UPDATE maintenance_protocols SET" + column + "WHERE protocol = ?");
-            changeUpdateColumn(updateData, st, id);
+            changeUpdateColumn(updateData, st, pk);
             var result = st.executeUpdate();
             connection.close();
            if(result == 0) throw new RuntimeException("ERRO AO ATUALIZAR STATUS DO PROTOCOLO");
@@ -88,7 +88,7 @@ public class MaintenanceProtocolRepository extends StateRepository{
             System.out.println(e.getMessage());
         }
 
-        return "STATUS DO PROTOCOLO " + id + " ATUALIZADO PARA " + updateData.get("status").toUpperCase();
+        return "STATUS DO PROTOCOLO " + pk + " ATUALIZADO PARA " + updateData.get("status").toUpperCase();
     }
 
     private void changeUpdateColumn(Map<String, String> updateData, PreparedStatement st, String id) throws SQLException {
@@ -96,11 +96,9 @@ public class MaintenanceProtocolRepository extends StateRepository{
             st.setString(1, MaintenanceStatus.getStatus(updateData.get("status")).name());
             st.setDate(2, Date.valueOf(LocalDate.now()));
             st.setObject(3, UUID.fromString(id));
-            System.out.println(updateData.get("status"));
         }
 
         if (MaintenanceStatus.getStatus(updateData.get("status")) == MaintenanceStatus.CANCELED) {
-            System.out.println("cancelado");
             st.setDate(1, Date.valueOf(LocalDate.now()));
             st.setString(2, MaintenanceStatus.CANCELED.name());
             st.setString(3, updateData.get("reason"));
@@ -113,7 +111,7 @@ public class MaintenanceProtocolRepository extends StateRepository{
 
         stmt.setObject(1, protocol.getProtocol());
         stmt.setObject(2, protocol.getPropertyIdForMaintenance());
-        stmt.setObject(3, protocol.getRequestingTenantId());
+        stmt.setString(3, protocol.getRequestingTenantCpf());
         stmt.setDate(4, Date.valueOf(protocol.getOpeningDate()));
         stmt.setString(5, protocol.getMaintenanceDetails());
         stmt.setString(6, protocol.getStatus().toString());
@@ -121,7 +119,7 @@ public class MaintenanceProtocolRepository extends StateRepository{
 
     private void rebuild(ResultSet result) throws SQLException {
         maintenanceBuilder.setProtocol((UUID) result.getObject("protocol"));
-        maintenanceBuilder.setRequestingTenantId((UUID) result.getObject("requesting_tenant_id"));
+        maintenanceBuilder.setRequestingTenantCpf(result.getString("requesting_tenant_cpf"));
         maintenanceBuilder.setPropertyId((UUID) result.getObject("property_id_for_maintenance"));
         maintenanceBuilder.setOpeningDate(result.getDate("opening_date").toLocalDate());
         maintenanceBuilder.setDateOfResolution(result.getDate("date_of_resolution") != null ? result.getDate("date_of_resolution").toLocalDate() : null);

@@ -30,8 +30,8 @@ public class PropertyBuilder implements IPropertyBuilder {
     }
 
     @Override
-    public void setOwnerId(UUID id) {
-        this.property.setOwnerId(id);
+    public void setOwnerCpf(String ownerCpf) {
+        this.property.setOwnerCpf(ownerCpf);
     }
 
     @Override

@@ -11,7 +11,7 @@ public interface IMaintenanceBuilder {
     void reset();
     void setProtocol(UUID protocol);
     void setPropertyId(UUID propertyId);
-    void setRequestingTenantId(UUID requestingTenantId);
+    void setRequestingTenantCpf(String requestingTenantCpf);
     void setOpeningDate(LocalDate openingDate);
     void setDateOfResolution(LocalDate dateOfResolution);
     void setMaintenanceStatus(MaintenanceStatus status);

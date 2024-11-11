@@ -14,9 +14,9 @@ public class TemplateMethodDirector implements ITemplateMethod {
     }
 
     private void setDirector(Map<String, String> data) {
-        if(data.containsKey("name")) this.director = (new UserDirectorImpl());
-        if(data.containsKey("ownerId")) this.director = (new PropertyDirectorImpl());
-        if(data.containsKey("tenantId")) this.director = (new ContractDirectorImpl());
+        if(data.containsKey("cpf")) this.director = (new UserDirectorImpl());
+        if(data.containsKey("ownerCpf")) this.director = (new PropertyDirectorImpl());
+        if(data.containsKey("tenantCpf")) this.director = (new ContractDirectorImpl());
         if(data.containsKey("MaintenanceDetails")) this.director = (new MaintenanceProtocolDirectorImpl());
     }
 }

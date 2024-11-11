@@ -8,7 +8,7 @@ import java.util.UUID;
 public class Contract {
     private UUID id;
     private UUID propertyId;
-    private UUID tenantId;
+    private String tenantCpf;
     private LocalDate startDate;
     private LocalDate endDate;
     private Double monthlyRent;
@@ -40,12 +40,12 @@ public class Contract {
         this.propertyId = propertyId;
     }
 
-    public UUID getTenantId() {
-        return tenantId;
+    public String getTenantCpf() {
+        return tenantCpf;
     }
 
-    public void setTenantId(UUID tenantId) {
-        this.tenantId = tenantId;
+    public void setTenantCpf(String tenantCpf) {
+        this.tenantCpf = tenantCpf;
     }
 
     public LocalDate getStartDate() {

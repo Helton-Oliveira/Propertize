@@ -22,7 +22,7 @@ public class CreateProperty implements ICreateProperty {
     @Override
     public Property execute(Map<String, String> data) {
         repositoryContext.changeState("users");
-        var owner = (User) repositoryContext.getOne(data.get("ownerId"));
+        User owner = repositoryContext.getOne(data.get("ownerCpf"));
         if (owner == null || owner.getActive().equals(false) || !owner.getRole().name().equals("OWNER")) throw new RuntimeException("ERRO! PROPRIETÁRIO NÃO EXISTENTE NO SISTEMA."); // validação temporaria
 
         Property property = abstractDirector.build(data);

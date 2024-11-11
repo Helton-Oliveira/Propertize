@@ -33,8 +33,8 @@ public class MaintenanceBuilder implements IMaintenanceBuilder{
     }
 
     @Override
-    public void setRequestingTenantId(UUID requestingTenantId) {
-        this.maintenanceProtocol.setRequestingTenantId(requestingTenantId);
+    public void setRequestingTenantCpf(String requestingTenantId) {
+        this.maintenanceProtocol.setRequestingTenantCpf(requestingTenantId);
     }
 
     @Override
