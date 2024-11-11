@@ -1,7 +1,7 @@
 package com.digisphere.propertize;
 
-import com.digisphere.propertize.application.director.bridgePattern.implementations.AbstractDirector;
-import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.TemplateMethodDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.property.useCase.CreateProperty;
 import com.digisphere.propertize.application.property.useCase.GetAllProperties;
@@ -25,7 +25,7 @@ public class PropertyTest {
     void createProperty() {
         Map<String, String> data = new HashMap<>();
         IRepositoryContext repositoryContext = new RepositoryContext();
-        IAbstractDirector abstractDirector = new AbstractDirector();
+        ITemplateMethod abstractDirector = new TemplateMethodDirector();
 
         data.put("ownerId", "faabf272-3958-43c6-be71-f440c6342187");
         data.put("description", "A beautiful family home with a large garden and modern amenities.");

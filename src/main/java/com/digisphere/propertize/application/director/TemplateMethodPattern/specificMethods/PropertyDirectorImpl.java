@@ -1,6 +1,5 @@
-package com.digisphere.propertize.application.director.bridgePattern.implementations;
+package com.digisphere.propertize.application.director.TemplateMethodPattern.specificMethods;
 
-import com.digisphere.propertize.application.director.bridgePattern.abstractions.IBridge;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.property.domain.component.Address;
 import com.digisphere.propertize.application.property.domain.component.PropertyStatus;
@@ -12,12 +11,12 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.UUID;
 
-public class PropertyDirectorImpl implements IBridge {
+public class PropertyDirectorImpl implements IDirector {
     private final IPropertyBuilder propertyBuilder = new PropertyBuilder();
     private Property property;
 
     @Override
-    public void build(Map<String, String> data) {
+    public void buildEntity(Map<String, String> data) {
         propertyBuilder.setId(UUID.randomUUID());
         propertyBuilder.setOwnerId(UUID.fromString(data.get("ownerId")));
         propertyBuilder.setDescription(data.get("description"));

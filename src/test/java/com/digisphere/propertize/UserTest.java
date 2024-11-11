@@ -1,7 +1,7 @@
 package com.digisphere.propertize;
 
-import com.digisphere.propertize.application.director.bridgePattern.implementations.AbstractDirector;
-import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.TemplateMethodDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
 import com.digisphere.propertize.application.observerPattern.subject.EventManager;
 import com.digisphere.propertize.application.observerPattern.subject.IEventManager;
 import com.digisphere.propertize.application.user.useCase.*;
@@ -22,7 +22,7 @@ public class UserTest {
     void createAdmin() {
 
         Map<String, String> input = new HashMap<>();
-        IAbstractDirector abstractDirector = new AbstractDirector();
+        ITemplateMethod abstractDirector = new TemplateMethodDirector();
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
 
@@ -41,7 +41,7 @@ public class UserTest {
     @DisplayName("Deve criar um usuario inquilino")
     void createTenant() {
         Map<String, String> input = new HashMap<>();
-        IAbstractDirector abstractDirector = new AbstractDirector();
+        ITemplateMethod abstractDirector = new TemplateMethodDirector();
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
 
@@ -61,7 +61,7 @@ public class UserTest {
     @DisplayName("Deve criar um usuario proprietario de uma residencia")
     void createOwner() {
         Map<String, String> input = new HashMap<>();
-        IAbstractDirector abstractDirector = new AbstractDirector();
+        ITemplateMethod abstractDirector = new TemplateMethodDirector();
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
         input.put("name", "Karla Maynny");

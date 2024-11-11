@@ -5,8 +5,8 @@ import com.digisphere.propertize.application.contract.useCase.interfaces.ICreate
 import com.digisphere.propertize.application.contract.useCase.interfaces.IGetAllContracts;
 import com.digisphere.propertize.application.contract.useCase.interfaces.IGetOneContract;
 import com.digisphere.propertize.application.contract.useCase.interfaces.IUpdateContract;
-import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
-import com.digisphere.propertize.application.director.bridgePattern.implementations.AbstractDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.TemplateMethodDirector;
 import com.digisphere.propertize.application.maintenance.useCase.GetOneMaintenanceProtocol;
 import com.digisphere.propertize.application.maintenance.useCase.OpenProtocol;
 import com.digisphere.propertize.application.maintenance.useCase.PickUpOpenMaintenanceProtocols;
@@ -50,8 +50,8 @@ public class Config {
 
     //directors
     @Bean
-    public IAbstractDirector abstractDirector() {
-        return new AbstractDirector();
+    public ITemplateMethod abstractDirector() {
+        return new TemplateMethodDirector();
     }
 
     // user use cases
@@ -61,7 +61,7 @@ public class Config {
     }
 
     @Bean
-    public ICreateUser createUser(IRepositoryContext repository, IAbstractDirector abstractDirector, IEventManager manager) {
+    public ICreateUser createUser(IRepositoryContext repository, ITemplateMethod abstractDirector, IEventManager manager) {
         return new CreateUser(repository, manager, abstractDirector);
     }
 
@@ -87,7 +87,7 @@ public class Config {
 
     // property use cases
     @Bean
-    public ICreateProperty createProperty(IRepositoryContext repositoryContext, IAbstractDirector abstractDirector) {
+    public ICreateProperty createProperty(IRepositoryContext repositoryContext, ITemplateMethod abstractDirector) {
         return new CreateProperty(repositoryContext, abstractDirector);
     }
 
@@ -108,7 +108,7 @@ public class Config {
 
     // contract use cases
     @Bean
-    public ICreateContract createContract(IRepositoryContext repositoryContext, IAbstractDirector abstractDirector) {
+    public ICreateContract createContract(IRepositoryContext repositoryContext, ITemplateMethod abstractDirector) {
         return new CreateContract(repositoryContext, abstractDirector);
     }
 
@@ -129,7 +129,7 @@ public class Config {
 
     // maintenance use cases
     @Bean
-    public IOpenProtocol openProtocol(IRepositoryContext repositoryContext, IAbstractDirector abstractDirector) {
+    public IOpenProtocol openProtocol(IRepositoryContext repositoryContext, ITemplateMethod abstractDirector) {
         return new OpenProtocol(repositoryContext, abstractDirector);
     }
 

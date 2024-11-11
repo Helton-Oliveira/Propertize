@@ -5,8 +5,8 @@ import com.digisphere.propertize.application.contract.useCase.CreateContract;
 import com.digisphere.propertize.application.contract.useCase.GetAllContracts;
 import com.digisphere.propertize.application.contract.useCase.GetOneContract;
 import com.digisphere.propertize.application.contract.useCase.UpdateContract;
-import com.digisphere.propertize.application.director.bridgePattern.implementations.AbstractDirector;
-import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.TemplateMethodDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +31,7 @@ public class ContractTest {
         data.put("paymentDueDay", "5");
         data.put("securityDeposit", "7500.00");
         IRepositoryContext repositoryContext = new RepositoryContext();
-        IAbstractDirector abstractDirector = new AbstractDirector();
+        ITemplateMethod abstractDirector = new TemplateMethodDirector();
 
         var createContract = new CreateContract(repositoryContext, abstractDirector);
         Contract contract  = createContract.execute(data);

@@ -1,6 +1,6 @@
 package com.digisphere.propertize.application.property.useCase;
 
-import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.property.useCase.interfaces.ICreateProperty;
 import com.digisphere.propertize.application.user.domain.User;
@@ -12,9 +12,9 @@ import java.util.Map;
 public class CreateProperty implements ICreateProperty {
 
     private final IRepositoryContext repositoryContext;
-    private final IAbstractDirector abstractDirector;
+    private final ITemplateMethod abstractDirector;
 
-    public CreateProperty(IRepositoryContext repositoryContext, IAbstractDirector abstractDirector) {
+    public CreateProperty(IRepositoryContext repositoryContext, ITemplateMethod abstractDirector) {
         this.repositoryContext = repositoryContext;
         this.abstractDirector = abstractDirector;
     }

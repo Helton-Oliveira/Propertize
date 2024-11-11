@@ -1,4 +1,4 @@
-package com.digisphere.propertize.application.director.bridgePattern.implementations;
+package com.digisphere.propertize.application.director.TemplateMethodPattern.specificMethods;
 
 import com.digisphere.propertize.application.contract.contractBuilder.ContractBuilder;
 import com.digisphere.propertize.application.contract.contractBuilder.IContractBuilder;
@@ -8,18 +8,17 @@ import com.digisphere.propertize.application.contract.utils.CalculateContractPer
 import com.digisphere.propertize.application.contract.utils.GenerateContractTerms;
 import com.digisphere.propertize.application.contract.utils.GenerateMaintenanceClause;
 import com.digisphere.propertize.application.contract.utils.TerminationFeePercentCalculate;
-import com.digisphere.propertize.application.director.bridgePattern.abstractions.IBridge;
 
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.UUID;
 
-public class ContractDirectorImpl implements IBridge {
+public class ContractDirectorImpl implements IDirector {
     private final IContractBuilder contractBuilder = new ContractBuilder();
     private Contract contract;
 
     @Override
-    public void build(Map<String, String> data) {
+    public void buildEntity(Map<String, String> data) {
         var startDate = LocalDate.parse(data.get("startDate"));
         var period = Integer.parseInt(data.get("period"));
         var monthlyRent = Double.valueOf(data.get("monthlyRent"));

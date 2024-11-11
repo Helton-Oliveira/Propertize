@@ -2,7 +2,7 @@ package com.digisphere.propertize.application.contract.useCase;
 
 import com.digisphere.propertize.application.contract.domain.Contract;
 import com.digisphere.propertize.application.contract.useCase.interfaces.ICreateContract;
-import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.user.domain.User;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
@@ -14,9 +14,9 @@ import java.util.Map;
 public class CreateContract implements ICreateContract {
 
     private final IRepositoryContext repositoryContext;
-    private final IAbstractDirector abstractDirector;
+    private final ITemplateMethod abstractDirector;
 
-    public CreateContract(IRepositoryContext repositoryContext, IAbstractDirector abstractDirector) {
+    public CreateContract(IRepositoryContext repositoryContext, ITemplateMethod abstractDirector) {
         this.repositoryContext = repositoryContext;
         this.abstractDirector = abstractDirector;
     }

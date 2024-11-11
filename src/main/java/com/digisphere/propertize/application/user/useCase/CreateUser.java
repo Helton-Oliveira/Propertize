@@ -1,6 +1,6 @@
 package com.digisphere.propertize.application.user.useCase;
 
-import com.digisphere.propertize.application.director.bridgePattern.abstractions.IAbstractDirector;
+import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
 import com.digisphere.propertize.application.observerPattern.subject.IEventManager;
 import com.digisphere.propertize.application.user.domain.User;
 import com.digisphere.propertize.application.user.useCase.interfaces.ICreateUser;
@@ -14,9 +14,9 @@ public class CreateUser implements ICreateUser {
 
     private final IRepositoryContext repositoryContext;
     private final IEventManager eventManager;
-    private final IAbstractDirector abstractDirector;
+    private final ITemplateMethod abstractDirector;
 
-    public CreateUser(IRepositoryContext stateContext, IEventManager eventManager, IAbstractDirector abstractDirector) {
+    public CreateUser(IRepositoryContext stateContext, IEventManager eventManager, ITemplateMethod abstractDirector) {
         this.repositoryContext = stateContext;
         this.eventManager = eventManager;
         this.abstractDirector = abstractDirector;
