@@ -56,6 +56,7 @@ The following design patterns are implemented in this refactor:
 - **State**: Behavioral pattern that allows you to define a class capable of changing the logic of its methods according to its "state", almost as if it were another class.
 - **Observer**: Behavioral pattern that allows defining a signature mechanism capable of notifying all observing objects regarding any change to the observed object (subject)
 - **Template Method**: behavioral pattern that defines a default method (for all subclasses) in the superclass, and its subclasses can override its specific methods but do not modify its structure or the default method, in the project composition was used instead of inheritance.
+- **Adapter**: structural pattern where objects with incompatible interfaces can collaborate with each other
 
 > *Note: Reference materials for this project were consulted from [Refactoring Guru](https://refactoring.guru/pt-br), which provides comprehensive insights into design patterns and refactoring techniques.*
 
