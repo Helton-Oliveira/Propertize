@@ -23,11 +23,11 @@ public class PropertyDirectorImpl implements IDirector {
         propertyBuilder.setAddress(new Address(data));
         propertyBuilder.setType(PropertyType.fromString(data.get("type")));
         propertyBuilder.setSize(Double.valueOf(data.get("size")));
-        propertyBuilder.setBedroomCount(Integer.parseInt(data.get("bedRoomCount")));
-        propertyBuilder.setBathroomCount(Integer.parseInt(data.get("bathRoomCount")));
+        propertyBuilder.setBedroomCount(Integer.parseInt(data.get("bedroomCount")));
+        propertyBuilder.setBathroomCount(Integer.parseInt(data.get("bathroomCount")));
         propertyBuilder.setHasGarage(Boolean.valueOf(data.get("hasGarage")));
         propertyBuilder.setRentValue(Double.valueOf(data.get("rentValue")));
-        propertyBuilder.setStatus(PropertyStatus.fromString(data.get("status")));
+        propertyBuilder.setStatus(PropertyStatus.AVAILABLE);
         propertyBuilder.setConstructionDate(LocalDate.parse(data.get("constructionDate")));
         propertyBuilder.setMaintenancePending(false);
         property = propertyBuilder.getProperty();
