@@ -1,6 +1,11 @@
 package com.digisphere.propertize.infra.config;
 
-import com.digisphere.propertize.application.contract.useCase.*;
+import com.digisphere.propertize.adapter.adapterPattern.userAdapter.IAdapterUser;
+import com.digisphere.propertize.adapter.adapterPattern.userAdapter.UserAdapter;
+import com.digisphere.propertize.application.contract.useCase.CreateContract;
+import com.digisphere.propertize.application.contract.useCase.GetAllContracts;
+import com.digisphere.propertize.application.contract.useCase.GetOneContract;
+import com.digisphere.propertize.application.contract.useCase.UpdateContract;
 import com.digisphere.propertize.application.contract.useCase.interfaces.ICreateContract;
 import com.digisphere.propertize.application.contract.useCase.interfaces.IGetAllContracts;
 import com.digisphere.propertize.application.contract.useCase.interfaces.IGetOneContract;
@@ -46,6 +51,11 @@ public class Config {
     @Bean
     public IEventManager eventManager() {
         return new EventManager();
+    }
+
+    @Bean
+    public IAdapterUser adapterUser(ICreateUser createUser, IUpdateUser updateUser, IGetOneUSer getOneUSer, IDisableUser disableUser) {
+        return new UserAdapter(createUser, updateUser, getOneUSer, disableUser);
     }
 
     //directors

@@ -127,7 +127,6 @@ public class UserRepository extends StateRepository {
     }
 
     private void rebuild(ResultSet result) throws SQLException {
-        System.out.println("rebuild");
         builder.setName(result.getString("name"));
         builder.setEmail(result.getString("email"));
         builder.setCpf(result.getString("cpf"));
