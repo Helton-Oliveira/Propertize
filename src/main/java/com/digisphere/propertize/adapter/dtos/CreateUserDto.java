@@ -1,4 +1,4 @@
-/*package com.digisphere.propertize.adapter.dtos;
+package com.digisphere.propertize.adapter.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,7 +7,7 @@ public record CreateUserDto(
         @NotBlank
         String name,
 
-        @Email
+        @NotBlank @Email
         String email,
 
         @NotBlank
@@ -18,4 +18,4 @@ public record CreateUserDto(
 
         String role
 ) {
-}*/
+}

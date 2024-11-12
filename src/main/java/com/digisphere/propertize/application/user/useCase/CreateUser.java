@@ -28,7 +28,7 @@ public class CreateUser implements ICreateUser {
         User user = abstractDirector.build(attributes);
 
         Map<String, String> dataForNotify = new HashMap<>();
-        dataForNotify.put("email", user.getEmail());
+        dataForNotify.put("email", attributes.get("email"));
         dataForNotify.put("userName", user.getName());
         dataForNotify.put("password", user.getPassword());
         eventManager.subscribe("emailAlert");

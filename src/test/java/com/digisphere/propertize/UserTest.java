@@ -27,15 +27,17 @@ public class UserTest {
         IRepositoryContext stateContext = new RepositoryContext();
         IEventManager eventManager = new EventManager();
 
-        input.put("name", "Richard Robson");
-        input.put("cpf", "58158076050");
-        input.put("phone", "19 99845577");
+        input.put("name", "Steve Rogers");
+        input.put("cpf", "97452479017");
+        input.put("phone", "19 99845637");
+        input.put("role", "admin");
+        input.put("email", "email@example.com");
 
         var admin = new CreateUser(stateContext, eventManager, abstractDirector);
         var result = admin.execute(input);
 
         assertThat(result.getRole().toString()).isEqualTo("ADMIN");
-        assertThat(result.getEmail()).isEqualTo("richard.robson@propertize.com");
+        assertThat(result.getEmail()).isEqualTo("steve.rogers@propertize.com");
     }
 
     @Test
