@@ -1,5 +1,7 @@
 package com.digisphere.propertize.infra.config;
 
+import com.digisphere.propertize.adapter.adapterPattern.PropertyAdapter.IPropertyAdapter;
+import com.digisphere.propertize.adapter.adapterPattern.PropertyAdapter.PropertyAdapter;
 import com.digisphere.propertize.adapter.adapterPattern.userAdapter.IAdapterUser;
 import com.digisphere.propertize.adapter.adapterPattern.userAdapter.UserAdapter;
 import com.digisphere.propertize.application.contract.useCase.CreateContract;
@@ -56,6 +58,11 @@ public class Config {
     @Bean
     public IAdapterUser adapterUser(ICreateUser createUser, IUpdateUser updateUser, IGetOneUSer getOneUSer, IDisableUser disableUser) {
         return new UserAdapter(createUser, updateUser, getOneUSer, disableUser);
+    }
+
+    @Bean
+    public IPropertyAdapter propertyAdapter(ICreateProperty createProperty, IGetOneProperty getOneProperty, IUpdateProperty updateProperty) {
+        return new PropertyAdapter(createProperty, getOneProperty, updateProperty);
     }
 
     //directors
