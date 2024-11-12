@@ -1,4 +1,4 @@
-package com.digisphere.propertize;
+package com.digisphere.propertize.IntegrationTests;
 
 import com.digisphere.propertize.application.contract.domain.Contract;
 import com.digisphere.propertize.application.contract.useCase.CreateContract;

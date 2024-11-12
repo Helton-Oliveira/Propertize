@@ -1,4 +1,4 @@
-package com.digisphere.propertize;
+package com.digisphere.propertize.IntegrationTests;
 
 import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.TemplateMethodDirector;
 import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
