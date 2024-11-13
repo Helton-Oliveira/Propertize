@@ -34,13 +34,18 @@ public class CreateContract implements ICreateContract {
 
         if(!user.getRole().toString().equalsIgnoreCase("tenant")) throw new RuntimeException("ERRO SÓ É POSSÍVEL VINCULAR INQUILINOS AOS CONTRATOS");
 
-        data.put("propertyId", property.getId().toString());
-        data.put("tenantCpf", user.getCpf());
-        data.put("startDate", LocalDate.now().toString());
-        data.put("monthlyRent", property.getRentValue().toString());
-        data.put("address", property.getAddress().toString());
+        Map<String, String> dataToCreate = new HashMap<>();
 
-        Contract contract = abstractDirector.build(data);
+        dataToCreate.put("propertyId", property.getId().toString());
+        dataToCreate.put("tenantCpf", user.getCpf());
+        dataToCreate.put("period", data.get("period"));
+        dataToCreate.put("paymentDueDay", data.get("paymentDueDay"));
+        dataToCreate.put("securityDeposit", data.get("securityDeposit"));
+        dataToCreate.put("startDate", LocalDate.now().toString());
+        dataToCreate.put("monthlyRent", property.getRentValue().toString());
+        dataToCreate.put("address", property.getAddress().toString());
+
+        Contract contract = abstractDirector.build(dataToCreate);
         Map<String, Object> contractMap = new HashMap<>();
         contractMap.put("contract", contract);
 

@@ -85,7 +85,7 @@ public class ContractRepository extends StateRepository{
         if(updateData.containsKey("terminationDate") || updateData.containsKey("terminationReason")) column = "termination_date = ?, termination_reason = ?";
 
         try {
-            var st = connection.query("UPDATE contracts SET " + column + " WHERE pk = ?");
+            var st = connection.query("UPDATE contracts SET " + column + " WHERE id = ?");
             changeUpdate(updateData, st, pk);
             var result = st.executeUpdate();
 
