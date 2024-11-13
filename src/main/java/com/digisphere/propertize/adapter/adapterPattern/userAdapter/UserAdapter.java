@@ -36,8 +36,7 @@ public class UserAdapter implements IAdapterUser {
         );
 
         User user = createUser.execute(dataToCreate);
-
-        return new OutputUser(user.getName(), user.getEmail(), user.getCpf(), user.getPhone(), user.getRole().toString());
+        return outputUser(user);
     }
 
     @Override
@@ -53,12 +52,22 @@ public class UserAdapter implements IAdapterUser {
     @Override
     public OutputUser adaptFindUserRequest(UserReferenceDto dto) {
         var user = getOneUSer.execute(dto.cpf());
-        return new OutputUser(user.getName(), user.getEmail(), user.getCpf(), user.getPhone(), user.getRole().toString());
+        return outputUser(user);
     }
 
     @Override
     public String adaptDeactivateUserRequest(UserReferenceDto dto) {
         return disableUser.execute(dto.cpf());
+    }
+
+
+    private OutputUser outputUser(User user) {
+        return new OutputUser(
+                user.getName(),
+                user.getEmail(),
+                user.getCpf(),
+                user.getPhone(),
+                user.getRole().toString());
     }
 
 }
