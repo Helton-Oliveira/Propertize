@@ -27,7 +27,6 @@ public class ContractTest {
         data.put("propertyId", "647460b5-fb18-4329-9343-9b539b789779");
         data.put("tenantCpf", "07416672074");
         data.put("period", "2");
-        data.put("monthlyRent", "2500.00");
         data.put("paymentDueDay", "5");
         data.put("securityDeposit", "7500.00");
         IRepositoryContext repositoryContext = new RepositoryContext();
