@@ -17,6 +17,6 @@ public class TemplateMethodDirector implements ITemplateMethod {
         if(data.containsKey("cpf")) this.director = (new UserDirectorImpl());
         if(data.containsKey("ownerCpf")) this.director = (new PropertyDirectorImpl());
         if(data.containsKey("tenantCpf")) this.director = (new ContractDirectorImpl());
-        if(data.containsKey("MaintenanceDetails")) this.director = (new MaintenanceProtocolDirectorImpl());
+        if(data.containsKey("maintenanceDetails")) this.director = (new MaintenanceProtocolDirectorImpl());
     }
 }

@@ -19,7 +19,7 @@ public class MaintenanceProtocolDirectorImpl implements IDirector {
         maintenanceBuilder.setPropertyId(UUID.fromString(data.get("propertyId")));
         maintenanceBuilder.setRequestingTenantCpf(data.get("tenantCpf"));
         maintenanceBuilder.setOpeningDate(LocalDate.now());
-        maintenanceBuilder.setMaintenanceDetails(data.get("MaintenanceDetails"));
+        maintenanceBuilder.setMaintenanceDetails(data.get("maintenanceDetails"));
         maintenanceBuilder.setMaintenanceStatus(MaintenanceStatus.OPEN);
         maintenanceProtocol = maintenanceBuilder.build();
     }
