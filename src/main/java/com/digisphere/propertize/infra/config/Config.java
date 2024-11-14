@@ -4,6 +4,8 @@ import com.digisphere.propertize.adapter.adapterPattern.PropertyAdapter.IPropert
 import com.digisphere.propertize.adapter.adapterPattern.PropertyAdapter.PropertyAdapter;
 import com.digisphere.propertize.adapter.adapterPattern.contractAdapter.ContractRequestAdapter;
 import com.digisphere.propertize.adapter.adapterPattern.contractAdapter.IContractRequestAdapter;
+import com.digisphere.propertize.adapter.adapterPattern.maintenanceProtocolAdapter.IMaintenanceProtocolRequestAdapter;
+import com.digisphere.propertize.adapter.adapterPattern.maintenanceProtocolAdapter.MaintenanceProtocolRequestAdapter;
 import com.digisphere.propertize.adapter.adapterPattern.userAdapter.IAdapterUser;
 import com.digisphere.propertize.adapter.adapterPattern.userAdapter.UserAdapter;
 import com.digisphere.propertize.application.contract.useCase.CreateContract;
@@ -70,6 +72,11 @@ public class Config {
     @Bean
     public IContractRequestAdapter contractRequestAdapter(ICreateContract createContract, IGetOneContract getOneContract, IUpdateContract updateContract) {
         return new ContractRequestAdapter(createContract, getOneContract, updateContract);
+    }
+
+    @Bean
+    public IMaintenanceProtocolRequestAdapter maintenanceProtocolRequestAdapter(IOpenProtocol openProtocol, IGetOneMaintenanceProtocol getOneMaintenanceProtocol, IUpdateMaintenanceStatus updateMaintenanceStatus){
+        return new MaintenanceProtocolRequestAdapter(openProtocol, getOneMaintenanceProtocol, updateMaintenanceStatus);
     }
 
     //directors
