@@ -75,7 +75,8 @@ public class MaintenanceProtocolRepository extends StateRepository{
 
     @Override
     public String update(String pk, Map<String, String> updateData) {
-        String column = " maintenance_status = ?, date_of_resolution = ? ";
+        String column = " maintenance_status = ? ";
+        if(MaintenanceStatus.getStatus(updateData.get("status")).equals(MaintenanceStatus.COMPLETED)) column = " maintenance_status = ?, date_of_resolution = ? ";
         if (MaintenanceStatus.getStatus(updateData.get("status")).equals(MaintenanceStatus.CANCELED) && updateData.containsKey("reason")) column = " date_of_resolution = ?, maintenance_status = ?, reason_for_cancellation = ? ";
         try {
             var st = connection.query("UPDATE maintenance_protocols SET" + column + "WHERE protocol = ?");
@@ -92,7 +93,12 @@ public class MaintenanceProtocolRepository extends StateRepository{
     }
 
     private void changeUpdateColumn(Map<String, String> updateData, PreparedStatement st, String id) throws SQLException {
-        if(MaintenanceStatus.getStatus(updateData.get("status")) != MaintenanceStatus.CANCELED) {
+        if(MaintenanceStatus.getStatus(updateData.get("status")) != MaintenanceStatus.COMPLETED || MaintenanceStatus.getStatus(updateData.get("status")) != MaintenanceStatus.CANCELED) {
+            st.setString(1, MaintenanceStatus.getStatus(updateData.get("status")).name());
+            st.setObject(2, UUID.fromString(id));
+        }
+
+        if(MaintenanceStatus.getStatus(updateData.get("status")) == MaintenanceStatus.COMPLETED) {
             st.setString(1, MaintenanceStatus.getStatus(updateData.get("status")).name());
             st.setDate(2, Date.valueOf(LocalDate.now()));
             st.setObject(3, UUID.fromString(id));
