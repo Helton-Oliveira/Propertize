@@ -36,6 +36,8 @@ import com.digisphere.propertize.application.property.useCase.interfaces.ICreate
 import com.digisphere.propertize.application.property.useCase.interfaces.IGetAllProperties;
 import com.digisphere.propertize.application.property.useCase.interfaces.IGetOneProperty;
 import com.digisphere.propertize.application.property.useCase.interfaces.IUpdateProperty;
+import com.digisphere.propertize.application.user.businessRules.IUserRules;
+import com.digisphere.propertize.application.user.businessRules.ShouldNotBeDeletedIfItIsTheOnlyOne;
 import com.digisphere.propertize.application.user.useCase.*;
 import com.digisphere.propertize.application.user.useCase.interfaces.*;
 import com.digisphere.propertize.application.user.useCase.strategyPattern.context.Context;
@@ -44,6 +46,8 @@ import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContex
 import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class Config {
@@ -79,6 +83,13 @@ public class Config {
         return new MaintenanceProtocolRequestAdapter(openProtocol, getOneMaintenanceProtocol, updateMaintenanceStatus);
     }
 
+    //BusinessRules
+    @Bean
+    public IUserRules userRules(){
+        return new ShouldNotBeDeletedIfItIsTheOnlyOne();
+    }
+
+
     //directors
     @Bean
     public ITemplateMethod abstractDirector() {
@@ -107,8 +118,8 @@ public class Config {
     }
 
     @Bean
-    public IDisableUser disableUser(IRepositoryContext repositoryContext) {
-        return new DisableUser(repositoryContext);
+    public IDisableUser disableUser(IRepositoryContext repositoryContext, List<IUserRules> userRules) {
+        return new DisableUser(repositoryContext, userRules);
     }
 
     @Bean

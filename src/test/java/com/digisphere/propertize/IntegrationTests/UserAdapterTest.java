@@ -9,6 +9,8 @@ import com.digisphere.propertize.application.director.TemplateMethodPattern.Temp
 import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.TemplateMethodDirector;
 import com.digisphere.propertize.application.observerPattern.subject.EventManager;
 import com.digisphere.propertize.application.observerPattern.subject.IEventManager;
+import com.digisphere.propertize.application.user.businessRules.IUserRules;
+import com.digisphere.propertize.application.user.businessRules.ShouldNotBeDeletedIfItIsTheOnlyOne;
 import com.digisphere.propertize.application.user.useCase.CreateUser;
 import com.digisphere.propertize.application.user.useCase.DisableUser;
 import com.digisphere.propertize.application.user.useCase.GetOneUser;
@@ -23,6 +25,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserAdapterTest {
@@ -35,16 +40,18 @@ public class UserAdapterTest {
     private IEventManager eventManager;
     private ITemplateMethod templateMethod;
     private IAdapterUser adapterUser;
+    private List<IUserRules> userRules = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
         repositoryContext = new RepositoryContext();
+        userRules.add(new ShouldNotBeDeletedIfItIsTheOnlyOne());
         eventManager = new EventManager();
         templateMethod = new TemplateMethodDirector();
         createUser = new CreateUser(repositoryContext, eventManager, templateMethod);
         getOneUSer = new GetOneUser(repositoryContext);
         updateUser = new UpdateUser(repositoryContext);
-        disableUser = new DisableUser(repositoryContext);
+        disableUser = new DisableUser(repositoryContext, userRules);
 
         adapterUser = new UserAdapter(createUser, updateUser, getOneUSer, disableUser);
     }

@@ -4,6 +4,8 @@ import com.digisphere.propertize.application.director.TemplateMethodPattern.Temp
 import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
 import com.digisphere.propertize.application.observerPattern.subject.EventManager;
 import com.digisphere.propertize.application.observerPattern.subject.IEventManager;
+import com.digisphere.propertize.application.user.businessRules.IUserRules;
+import com.digisphere.propertize.application.user.businessRules.ShouldNotBeDeletedIfItIsTheOnlyOne;
 import com.digisphere.propertize.application.user.domain.User;
 import com.digisphere.propertize.application.user.useCase.*;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
@@ -11,7 +13,9 @@ import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -133,7 +137,8 @@ public class UserTest {
     @DisplayName("Deve desativar usuario")
     void deleteUser() {
         IRepositoryContext repositoryContext = new RepositoryContext();
-        var disabledUser = new DisableUser(repositoryContext);
+        List<IUserRules> userRules = List.of(new ShouldNotBeDeletedIfItIsTheOnlyOne());
+        var disabledUser = new DisableUser(repositoryContext, userRules);
         var response = disabledUser.execute("58158076050");
 
         assertThat(response).isEqualTo("USUÁRIO COM CPF: 58158076050 DESAIVADO COM SUCESSO.");
