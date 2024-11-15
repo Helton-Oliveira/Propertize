@@ -8,6 +8,9 @@ import com.digisphere.propertize.adapter.adapterPattern.maintenanceProtocolAdapt
 import com.digisphere.propertize.adapter.adapterPattern.maintenanceProtocolAdapter.MaintenanceProtocolRequestAdapter;
 import com.digisphere.propertize.adapter.adapterPattern.userAdapter.IAdapterUser;
 import com.digisphere.propertize.adapter.adapterPattern.userAdapter.UserAdapter;
+import com.digisphere.propertize.application.contract.businessRules.CheckContractCreationDate;
+import com.digisphere.propertize.application.contract.businessRules.IContractRules;
+import com.digisphere.propertize.application.contract.businessRules.TenantContractValidator;
 import com.digisphere.propertize.application.contract.useCase.CreateContract;
 import com.digisphere.propertize.application.contract.useCase.GetAllContracts;
 import com.digisphere.propertize.application.contract.useCase.GetOneContract;
@@ -102,6 +105,16 @@ public class Config {
         return new CheckIfTheOwnerIsActive(repositoryContext);
     }
 
+    @Bean
+    public IContractRules checkContractCreationDate() {
+        return new CheckContractCreationDate();
+    }
+
+    @Bean
+    public IContractRules tenantContractValidator() {
+        return new TenantContractValidator();
+    }
+
     //directors
     @Bean
     public ITemplateMethod abstractDirector() {
@@ -162,8 +175,8 @@ public class Config {
 
     // contract use cases
     @Bean
-    public ICreateContract createContract(IRepositoryContext repositoryContext, ITemplateMethod abstractDirector) {
-        return new CreateContract(repositoryContext, abstractDirector);
+    public ICreateContract createContract(IRepositoryContext repositoryContext, ITemplateMethod abstractDirector, List<IContractRules> contractRules) {
+        return new CreateContract(repositoryContext, abstractDirector, contractRules);
     }
 
     @Bean

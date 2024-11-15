@@ -1,5 +1,8 @@
 package com.digisphere.propertize.IntegrationTests;
 
+import com.digisphere.propertize.application.contract.businessRules.CheckContractCreationDate;
+import com.digisphere.propertize.application.contract.businessRules.IContractRules;
+import com.digisphere.propertize.application.contract.businessRules.TenantContractValidator;
 import com.digisphere.propertize.application.contract.domain.Contract;
 import com.digisphere.propertize.application.contract.useCase.CreateContract;
 import com.digisphere.propertize.application.contract.useCase.GetAllContracts;
@@ -12,6 +15,7 @@ import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,15 +28,18 @@ public class ContractTest {
     @DisplayName("Deve criar um contrato")
     void createContract() {
         Map<String, String> data = new HashMap<>();
-        data.put("propertyId", "647460b5-fb18-4329-9343-9b539b789779");
-        data.put("tenantCpf", "07416672074");
+        data.put("propertyId", "3f1ebd61-ad29-4be2-bd37-bcf3b1a9dd6d");
+        data.put("tenantCpf", "43651026051");
         data.put("period", "2");
         data.put("paymentDueDay", "5");
         data.put("securityDeposit", "7500.00");
         IRepositoryContext repositoryContext = new RepositoryContext();
         ITemplateMethod abstractDirector = new TemplateMethodDirector();
+        List<IContractRules> contractRules = new ArrayList<>();
+        contractRules.add(new TenantContractValidator());
+        contractRules.add(new CheckContractCreationDate());
 
-        var createContract = new CreateContract(repositoryContext, abstractDirector);
+        var createContract = new CreateContract(repositoryContext, abstractDirector, contractRules);
         Contract contract  = createContract.execute(data);
 
         assertThat(contract.getId()).isNotNull();
@@ -73,8 +80,8 @@ public class ContractTest {
         data.put("terminationReason", "optou por mudar para outro local");
 
         var update = new UpdateContract(repositoryContext);
-        var contract = update.execute("a922bd54-0d01-4609-8559-d67163ec6daf", data);
+        var contract = update.execute("77efa89a-a949-4e6d-9330-812a23ec3fe7", data);
 
-        assertThat(contract).isEqualTo("CONTRATO ATUALIZADO NA COLUNA TERMINATIONDATE TERMINATIONREASON");
+        assertThat(contract).isEqualTo("CONTRATO ATUALIZADO NA COLUNA CONTRACTSTATUS TERMINATIONDATE TERMINATIONREASON");
     }
 }

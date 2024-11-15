@@ -58,7 +58,7 @@ public class ContractRepository extends StateRepository{
     public <T> List<T> getAll() {
         List<T> contractList = new ArrayList<>();
         try {
-            var st = connection.query("SELECT * FROM contracts");
+            var st = connection.query("SELECT * FROM contracts WHERE contract_status IN ('ACTIVE')");
             var result = st.executeQuery();
 
             while(result.next()) {
@@ -82,7 +82,7 @@ public class ContractRepository extends StateRepository{
     public String update(String pk, Map<String, String> updateData) {
         String column = "";
         if(updateData.containsKey("status")) column = "contract_status = ?";
-        if(updateData.containsKey("terminationDate") || updateData.containsKey("terminationReason")) column = "termination_date = ?, termination_reason = ?";
+        if(updateData.containsKey("terminationDate") || updateData.containsKey("terminationReason")) column = "contract_status = ?, termination_date = ?, termination_reason = ?";
 
         try {
             var st = connection.query("UPDATE contracts SET " + column + " WHERE id = ?");
@@ -102,9 +102,10 @@ public class ContractRepository extends StateRepository{
 
     private void changeUpdate(Map<String, String> updateData, PreparedStatement st, String id) throws SQLException {
         if(updateData.containsKey("terminationDate")) {
-            st.setDate(1, Date.valueOf(updateData.get("terminationDate")));
-            st.setString(2, updateData.get("terminationReason"));
-            st.setObject(3, UUID.fromString(id));
+            st.setString(1, ContractStatus.TERMINATED.toString());
+            st.setDate(2, Date.valueOf(updateData.get("terminationDate")));
+            st.setString(3, updateData.get("terminationReason"));
+            st.setObject(4, UUID.fromString(id));
         }
 
         if (updateData.containsKey("status")) {
