@@ -7,6 +7,9 @@ import com.digisphere.propertize.adapter.dtos.property.OutputProperty;
 import com.digisphere.propertize.adapter.dtos.property.PropertyReferenceDto;
 import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
 import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.TemplateMethodDirector;
+import com.digisphere.propertize.application.property.businessRules.CheckIfTheOwnerIsActive;
+import com.digisphere.propertize.application.property.businessRules.IPropertyRules;
+import com.digisphere.propertize.application.property.businessRules.RentalValueMustBeGreatherThanZero;
 import com.digisphere.propertize.application.property.useCase.CreateProperty;
 import com.digisphere.propertize.application.property.useCase.GetOneProperty;
 import com.digisphere.propertize.application.property.useCase.UpdateProperty;
@@ -15,9 +18,13 @@ import com.digisphere.propertize.application.property.useCase.interfaces.IGetOne
 import com.digisphere.propertize.application.property.useCase.interfaces.IUpdateProperty;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext;
+import org.apache.catalina.LifecycleState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,12 +36,15 @@ public class PropertyAdapterTest {
     private IRepositoryContext repositoryContext;
     private ITemplateMethod templateMethod;
     private IPropertyAdapter propertyAdapter;
+    private List<IPropertyRules> propertyRules = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
         repositoryContext = new RepositoryContext();
         templateMethod = new TemplateMethodDirector();
-        createProperty = new CreateProperty(repositoryContext, templateMethod);
+        propertyRules.add(new CheckIfTheOwnerIsActive(repositoryContext));
+        propertyRules.add(new RentalValueMustBeGreatherThanZero());
+        createProperty = new CreateProperty(repositoryContext, templateMethod, propertyRules);
         getOneProperty = new GetOneProperty(repositoryContext);
         updateProperty = new UpdateProperty(repositoryContext);
 

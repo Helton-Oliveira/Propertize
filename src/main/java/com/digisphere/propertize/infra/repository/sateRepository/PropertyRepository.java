@@ -44,7 +44,7 @@ public class PropertyRepository extends StateRepository {
     @Override
     public <T> T getOne(String pk) {
         try {
-            var st = connection.query("SELECT * FROM properties WHERE id = ?");
+            var st = connection.query("SELECT * FROM properties WHERE protocol = ?");
             st.setObject(1, UUID.fromString(pk));
             var response = st.executeQuery();
 
@@ -84,7 +84,7 @@ public class PropertyRepository extends StateRepository {
         if(updateData.containsKey("rentValue")) column = "rent_value";
 
         try {
-            var st = connection.query("UPDATE properties SET " + column + " = ? WHERE id = ?");
+            var st = connection.query("UPDATE properties SET " + column + " = ? WHERE protocol = ?");
             changeUpdate(column, st, updateData);
             st.setObject(2, UUID.fromString(pk));
             var response = st.executeUpdate();

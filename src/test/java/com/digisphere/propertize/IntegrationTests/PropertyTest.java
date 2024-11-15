@@ -2,6 +2,9 @@ package com.digisphere.propertize.IntegrationTests;
 
 import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.TemplateMethodDirector;
 import com.digisphere.propertize.application.director.TemplateMethodPattern.TemplateClass.ITemplateMethod;
+import com.digisphere.propertize.application.property.businessRules.CheckIfTheOwnerIsActive;
+import com.digisphere.propertize.application.property.businessRules.IPropertyRules;
+import com.digisphere.propertize.application.property.businessRules.RentalValueMustBeGreatherThanZero;
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.property.useCase.CreateProperty;
 import com.digisphere.propertize.application.property.useCase.GetAllProperties;
@@ -12,6 +15,7 @@ import com.digisphere.propertize.infra.repository.stateContext.RepositoryContext
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +30,10 @@ public class PropertyTest {
         Map<String, String> data = new HashMap<>();
         IRepositoryContext repositoryContext = new RepositoryContext();
         ITemplateMethod abstractDirector = new TemplateMethodDirector();
+        List<IPropertyRules> propertyRules = new ArrayList<>();
+
+        propertyRules.add(new CheckIfTheOwnerIsActive(repositoryContext));
+        propertyRules.add(new RentalValueMustBeGreatherThanZero());
 
         data.put("ownerCpf", "71686187092");
         data.put("description", "A beautiful family home with a large garden and modern amenities.");
@@ -38,14 +46,14 @@ public class PropertyTest {
         data.put("postalCode", "34701");
         data.put("type", "residencial");
         data.put("size", "180.0");
-        data.put("bedRoomCount", "4");
-        data.put("bathRoomCount", "3");
+        data.put("bedroomCount", "4");
+        data.put("bathroomCount", "3");
         data.put("hasGarage", "true");
         data.put("rentValue", "4500.00");
         data.put("status", "disponivel");
         data.put("constructionDate", "2010-08-16");
 
-        var creator = new CreateProperty(repositoryContext, abstractDirector);
+        var creator = new CreateProperty(repositoryContext, abstractDirector, propertyRules);
         var property = creator.execute(data);
 
         assertThat(property.getId()).isNotNull();

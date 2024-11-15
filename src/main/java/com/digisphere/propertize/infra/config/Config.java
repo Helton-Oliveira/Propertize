@@ -28,6 +28,9 @@ import com.digisphere.propertize.application.maintenance.useCase.interaces.IPick
 import com.digisphere.propertize.application.maintenance.useCase.interaces.IUpdateMaintenanceStatus;
 import com.digisphere.propertize.application.observerPattern.subject.EventManager;
 import com.digisphere.propertize.application.observerPattern.subject.IEventManager;
+import com.digisphere.propertize.application.property.businessRules.CheckIfTheOwnerIsActive;
+import com.digisphere.propertize.application.property.businessRules.IPropertyRules;
+import com.digisphere.propertize.application.property.businessRules.RentalValueMustBeGreatherThanZero;
 import com.digisphere.propertize.application.property.useCase.CreateProperty;
 import com.digisphere.propertize.application.property.useCase.GetAllProperties;
 import com.digisphere.propertize.application.property.useCase.GetOneProperty;
@@ -89,6 +92,15 @@ public class Config {
         return new ShouldNotBeDeletedIfItIsTheOnlyOne();
     }
 
+    @Bean
+    public IPropertyRules thanZero() {
+        return new RentalValueMustBeGreatherThanZero();
+    }
+
+    @Bean
+    public IPropertyRules checkIfTheOwnerIsActive(IRepositoryContext repositoryContext) {
+        return new CheckIfTheOwnerIsActive(repositoryContext);
+    }
 
     //directors
     @Bean
@@ -129,8 +141,8 @@ public class Config {
 
     // property use cases
     @Bean
-    public ICreateProperty createProperty(IRepositoryContext repositoryContext, ITemplateMethod abstractDirector) {
-        return new CreateProperty(repositoryContext, abstractDirector);
+    public ICreateProperty createProperty(IRepositoryContext repositoryContext, ITemplateMethod abstractDirector, List<IPropertyRules> propertyRules) {
+        return new CreateProperty(repositoryContext, abstractDirector, propertyRules);
     }
 
     @Bean
