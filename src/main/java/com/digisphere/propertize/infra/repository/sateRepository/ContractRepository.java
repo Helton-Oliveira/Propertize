@@ -4,6 +4,7 @@ import com.digisphere.propertize.adapter.connection.IConnection;
 import com.digisphere.propertize.application.contract.domain.Contract;
 import com.digisphere.propertize.application.contract.domain.component.ContractStatus;
 import com.digisphere.propertize.application.contract.contractBuilder.IContractBuilder;
+import com.digisphere.propertize.infra.ErrorHandler.CustomException;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -31,7 +32,7 @@ public class ContractRepository extends StateRepository{
                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
             buildInsertion(st, data);
             var result = st.executeUpdate();
-            if(result == 0) throw new RuntimeException("ERRO! CONTRATO NAO CRIADO");
+            if(result == 0) throw new CustomException("ERRO! CONTRATO NAO CRIADO");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -45,7 +46,7 @@ public class ContractRepository extends StateRepository{
            var st = connection.query("SELECT * FROM contracts WHERE id = ?");
             st.setObject(1, UUID.fromString(pk));
             var result = st.executeQuery();
-            if(!result.next()) throw new RuntimeException("NOT FOUND");
+            if(!result.next()) throw new CustomException("NOT FOUND");
             rebuild(result);
             connection.close();
         } catch (SQLException e) {
@@ -89,7 +90,7 @@ public class ContractRepository extends StateRepository{
             changeUpdate(updateData, st, pk);
             var result = st.executeUpdate();
 
-            if(result == 0) throw new RuntimeException("ERRO! CONTRATO NAO ATUALIZADO");
+            if(result == 0) throw new CustomException("ERRO! CONTRATO NAO ATUALIZADO");
 
             connection.close();
         } catch (SQLException e) {

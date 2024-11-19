@@ -6,6 +6,7 @@ import com.digisphere.propertize.application.property.domain.component.Address;
 import com.digisphere.propertize.application.property.domain.component.PropertyStatus;
 import com.digisphere.propertize.application.property.domain.component.PropertyType;
 import com.digisphere.propertize.application.property.domain.propertyBuilder.builder.IPropertyBuilder;
+import com.digisphere.propertize.infra.ErrorHandler.CustomException;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -33,7 +34,7 @@ public class PropertyRepository extends StateRepository {
                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             buildInsertion(stmt, data);
             var result = stmt.executeUpdate();
-            if (result == 0) throw new RuntimeException("ERROR! NÃO FOI POSSÍVEL SALVAR PROPRIEDADE");
+            if (result == 0) throw new CustomException("ERROR! NÃO FOI POSSÍVEL SALVAR PROPRIEDADE");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -48,7 +49,7 @@ public class PropertyRepository extends StateRepository {
             st.setObject(1, UUID.fromString(pk));
             var response = st.executeQuery();
 
-            if (!response.next()) throw new RuntimeException("ERROR! NAO ENCONTRADO ");
+            if (!response.next()) throw new CustomException("ERROR! NAO ENCONTRADO ");
 
             rebuild(response);
             connection.close();
@@ -89,7 +90,7 @@ public class PropertyRepository extends StateRepository {
             st.setObject(2, UUID.fromString(pk));
             var response = st.executeUpdate();
 
-            if (response == 0) throw new RuntimeException("ERRO PROPRIEDADE NAO ATUALIZADA");
+            if (response == 0) throw new CustomException("ERRO PROPRIEDADE NAO ATUALIZADA");
 
             connection.close();
         } catch (SQLException e) {

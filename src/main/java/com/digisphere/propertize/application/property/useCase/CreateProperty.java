@@ -5,6 +5,7 @@ import com.digisphere.propertize.application.property.businessRules.IPropertyRul
 import com.digisphere.propertize.application.property.domain.Property;
 import com.digisphere.propertize.application.property.useCase.interfaces.ICreateProperty;
 import com.digisphere.propertize.application.user.domain.User;
+import com.digisphere.propertize.infra.ErrorHandler.CustomException;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class CreateProperty implements ICreateProperty {
         repositoryContext.changeState("properties");
         var isSaved = repositoryContext.save(propertyMap);
 
-        if (!isSaved) throw new RuntimeException("ERRO! IMPOSSÍVEL SALVAR PROPRIEDADE");
+        if (!isSaved) throw new CustomException("ERRO! IMPOSSÍVEL SALVAR PROPRIEDADE");
         return property;
     }
 }

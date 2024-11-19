@@ -4,6 +4,7 @@ import com.digisphere.propertize.adapter.connection.IConnection;
 import com.digisphere.propertize.application.user.builderPattern.builder.IUserBuilder;
 import com.digisphere.propertize.application.user.domain.Role;
 import com.digisphere.propertize.application.user.domain.User;
+import com.digisphere.propertize.infra.ErrorHandler.CustomException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,14 +30,14 @@ public class UserRepository extends StateRepository {
             var st = connection.query("INSERT INTO users (cpf, name, email, password, phone, active, role) VALUES (?,?,?,?,?,?,?)");
             buildInsertion(st, data);
             var result = st.executeUpdate();
-            if (result != 0) {
-                return true;
+            if (result == 0) {
+                throw new CustomException("ERRO AO SALVAR USUÁRIO");
             }
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class UserRepository extends StateRepository {
             var result = st.executeQuery();
 
             if (!result.next()) {
-                return null;
+                 throw new CustomException("ERRO AO BUSCAR USUÁRIO");
             }
             rebuild(result);
             connection.close();
@@ -87,8 +88,8 @@ public class UserRepository extends StateRepository {
             st.setString(1, updateData.get(colmun));
             st.setString(2, pk);
             var result = st.executeUpdate();
-            if (result == 0) return null;
-
+            if (result == 0) throw new CustomException("ERRO AO ATUALIZAR USUÁRIO");
+            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -105,9 +106,9 @@ public class UserRepository extends StateRepository {
             var result = st.executeUpdate();
 
             if(result == 0) {
-                return "ERRO! IMPOSSÍVEL DESATIVAR USUÁRIO COM CPF: " + pk;
+                throw new CustomException("ERRO! IMPOSSÍVEL DESATIVAR USUÁRIO COM CPF: " + pk);
             }
-
+            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

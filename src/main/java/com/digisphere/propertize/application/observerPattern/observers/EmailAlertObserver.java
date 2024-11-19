@@ -1,5 +1,6 @@
 package com.digisphere.propertize.application.observerPattern.observers;
 
+import com.digisphere.propertize.infra.ErrorHandler.CustomException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -35,7 +36,7 @@ public class EmailAlertObserver implements IObserver {
             System.out.println(e.getMessage());
         }
 
-        throw new RuntimeException("ERRO NO ENVIO DE EMAIL");
+        throw new CustomException("ERRO NO ENVIO DE EMAIL");
     }
 
 

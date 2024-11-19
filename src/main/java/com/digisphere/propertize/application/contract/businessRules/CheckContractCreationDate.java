@@ -1,6 +1,7 @@
 package com.digisphere.propertize.application.contract.businessRules;
 
 import com.digisphere.propertize.application.contract.domain.Contract;
+import com.digisphere.propertize.infra.ErrorHandler.CustomException;
 import com.digisphere.propertize.infra.repository.stateContext.IRepositoryContext;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class CheckContractCreationDate implements IContractRules {
                     .toList();
 
             contractFiltered.forEach(c -> {
-                if (newContractStartDate.isBefore(c.getEndDate())) throw new RuntimeException("ERRO! PROPRIEDADE OU INQUILINO JÁ EXISTENTE EM OUTRO CONTRATO AINDA VÁLIDO");
+                if (newContractStartDate.isBefore(c.getEndDate())) throw new CustomException("ERRO! PROPRIEDADE OU INQUILINO JÁ EXISTENTE EM OUTRO CONTRATO AINDA VÁLIDO");
             });
         }
         repositoryContext.changeState("properties");

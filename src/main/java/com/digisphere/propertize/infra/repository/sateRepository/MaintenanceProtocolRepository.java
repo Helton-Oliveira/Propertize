@@ -4,6 +4,7 @@ import com.digisphere.propertize.adapter.connection.IConnection;
 import com.digisphere.propertize.application.maintenance.domain.MaintenanceProtocol;
 import com.digisphere.propertize.application.maintenance.domain.component.MaintenanceStatus;
 import com.digisphere.propertize.application.maintenance.maintenanceBuilder.IMaintenanceBuilder;
+import com.digisphere.propertize.infra.ErrorHandler.CustomException;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -31,7 +32,7 @@ public class MaintenanceProtocolRepository extends StateRepository{
             var st = connection.query("INSERT INTO maintenance_protocols (protocol, property_id_for_maintenance, requesting_tenant_cpf, opening_date, maintenance_details, maintenance_status) VALUES (?,?,?,?,?,?)");
             buildInsertion(st, data);
             var result = st.executeUpdate();
-            if(result == 0) throw new RuntimeException("ERRO AO CADASTRAR PROTOCOLO");
+            if(result == 0) throw new CustomException("ERRO AO CADASTRAR PROTOCOLO");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -45,7 +46,7 @@ public class MaintenanceProtocolRepository extends StateRepository{
             var st = connection.query("SELECT * FROM maintenance_protocols WHERE protocol = ?");
             st.setObject(1, UUID.fromString(pk));
             var result = st.executeQuery();
-            if (!result.next()) throw new RuntimeException("ID PROTOCOLO NÃO EXISTENTE");
+            if (!result.next()) throw new CustomException("ID PROTOCOLO NÃO EXISTENTE");
             rebuild(result);
             connection.close();
         } catch (SQLException e) {
@@ -83,7 +84,7 @@ public class MaintenanceProtocolRepository extends StateRepository{
             changeUpdateColumn(updateData, st, pk);
             var result = st.executeUpdate();
             connection.close();
-           if(result == 0) throw new RuntimeException("ERRO AO ATUALIZAR STATUS DO PROTOCOLO");
+           if(result == 0) throw new CustomException("ERRO AO ATUALIZAR STATUS DO PROTOCOLO");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

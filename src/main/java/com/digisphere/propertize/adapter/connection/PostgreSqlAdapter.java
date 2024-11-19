@@ -1,5 +1,7 @@
 package com.digisphere.propertize.adapter.connection;
 
+import com.digisphere.propertize.infra.ErrorHandler.CustomException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -18,9 +20,8 @@ public class PostgreSqlAdapter implements IConnection {
         try {
             return Objects.requireNonNull(connect()).prepareStatement(sql);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new CustomException(e.getMessage());
         }
-        return null;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class PostgreSqlAdapter implements IConnection {
         try {
             connection.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new CustomException(e.getMessage());
         }
     }
 
@@ -37,8 +38,7 @@ public class PostgreSqlAdapter implements IConnection {
             Properties properties = new Properties();
             InputStream input = getClass().getClassLoader().getResourceAsStream("env.properties");
             if (input == null) {
-                System.out.println("Desculpe, não foi possível encontrar o arquivo env.properties");
-                return null;
+                throw new CustomException("Desculpe, não foi possível encontrar o arquivo env.properties");
             }
             properties.load(input);
             String DB_URL = properties.getProperty("DB_URL");
@@ -49,7 +49,7 @@ public class PostgreSqlAdapter implements IConnection {
             this.connection = DriverManager.getConnection(DB_URL, USER, PASS);
 
         } catch (SQLException | ClassNotFoundException | IOException e) {
-            System.out.println(e.getMessage());
+            throw new CustomException(e.getMessage());
         }
         return connection;
     }
